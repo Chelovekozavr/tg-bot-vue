@@ -1,9 +1,14 @@
 <template>
     <div id="app">
+        <div id="nav">
+            <Router-link to="/1">На футбол</Router-link>
+            <br>
+            <Router-link to="/2">Відпочити</Router-link>
+        </div>
         <Header></Header>
         <router-view></router-view>
 
-        <p>{{ window?.Telegram?.WebApp?.initData }}</p>
+        <p>{{ Window?.Telegram?.WebApp?.initData }}</p>
     </div>
 </template>
 
@@ -20,7 +25,7 @@ export default {
         // MatchdayForm
     },
     created() {
-        console.log(window?.Telegram)
+        console.log(Window?.Telegram)
     }
 }
 </script>
@@ -32,7 +37,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: var(--tg-theme-text-color);
-  margin-top: 60px;
+  margin: 0;
+  padding: 0;
   background: var(--tg-theme-bg-color);
 }
 </style>
