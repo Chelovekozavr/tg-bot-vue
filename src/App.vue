@@ -1,16 +1,23 @@
 <template>
     <div id="app">
-        <Form></Form>
+        <Header></Header>
+        <router-view></router-view>
+
+        <p>{{ window.Telegram.WebApp.initData }}</p>
     </div>
 </template>
 
+
+
+
 <script>
-import Form from './components/Form.vue';
+import Header from './components/Header'
 
 export default {
     name: 'App',
     components: {
-        Form
+        Header,
+        // MatchdayForm
     },
     created() {
         console.log(window.Telegram)
@@ -26,6 +33,6 @@ export default {
   text-align: center;
   color: var(--tg-theme-text-color);
   margin-top: 60px;
-  background: var(--tg-color-scheme);
+  background: var(--tg-theme-bg-color);
 }
 </style>
