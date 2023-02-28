@@ -3,7 +3,7 @@
         <Header></Header>
         <router-view></router-view>
 
-        <p>{{ window.Telegram.WebApp.initData }}</p>
+        <p>{{ window?.Telegram?.WebApp?.initData }}</p>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
         // MatchdayForm
     },
     created() {
-        console.log(window.Telegram)
+        console.log(window?.Telegram)
     }
 }
 </script>
