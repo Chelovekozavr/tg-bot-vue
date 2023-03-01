@@ -120,11 +120,18 @@ import { ref } from 'vue';
 export default {
     name: "MatchdayForm",
     setup() {
-        const time = ref('0');
-        const name = ref('0');
-        const guests = ref('0');
-        const place = ref('0');
+        let time = ref('16:00');
+        let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username);
+        let guests = ref(1);
+        let place = ref('bar');
 
+        // onMounted(() => {
+        //     const username = window?.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+        //
+        //     if(username) {
+        //         name = username;
+        //     }
+        // })
 
         function getMatchName() {
             let urlParams = new URLSearchParams(window.location.search);

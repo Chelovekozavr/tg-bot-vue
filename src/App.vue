@@ -2,7 +2,7 @@
     <div id="app">
         <h2>
             {{ initData || 'noData' }}
-            {{ initDataUnsafe || 'noData' }}
+            {{ initDataUnsafe.username || 'noData' }}
         </h2>
         <div id="nav">
             <Router-link to="/1">На футбол</Router-link>
@@ -21,7 +21,7 @@
 
 <script>
 import Header from './components/Header'
-import { onMounted, ref } from 'vue';
+import {  ref } from 'vue';
 
 
 export default {
@@ -33,10 +33,6 @@ export default {
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
 
-        onMounted(() => {
-            console.log(window.Telegram);
-        })
-
         return {
             initData,
             initDataUnsafe,
@@ -46,14 +42,19 @@ export default {
 </script>
 
 <style>
+body {
+    padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--tg-theme-text-color);
+  /*color: var(--tg-theme-text-color);*/
+  color: mintcream;
   margin: 0;
   padding: 0;
-  background: var(--tg-theme-bg-color);
+  /*background: var(--tg-theme-bg-color);*/
+  background: ;
 }
 </style>
