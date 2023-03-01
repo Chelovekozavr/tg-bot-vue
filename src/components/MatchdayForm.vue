@@ -1,6 +1,7 @@
 <template>
     <form action="submit" className="form">
         <h2>Бронювання</h2>
+        <h3>{{ getMatchName() }}</h3>
         <div>
             <p>На коли:</p>
             <div>
@@ -113,7 +114,7 @@
 </template>
 
 <script>
-import {onMounted, ref} from 'vue';
+import { ref } from 'vue';
 
 
 export default {
@@ -123,15 +124,22 @@ export default {
         const name = ref('0');
         const guests = ref('0');
         const place = ref('0');
-        onMounted(() => {
-            console.log(13213123)
-        })
+
+
+        function getMatchName() {
+            let urlParams = new URLSearchParams(window.location.search);
+            console.log(urlParams.has('matchName'));
+            console.log(urlParams.get('matchName'));
+
+            return urlParams.get('matchName');
+        }
 
         return {
             time,
             name,
             guests,
-            place
+            place,
+            getMatchName
         }
     }
 }

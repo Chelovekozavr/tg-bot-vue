@@ -1,5 +1,9 @@
 <template>
     <div id="app">
+        <h2>
+            {{ initData || 'noData' }}
+            {{ initDataUnsafe || 'noData' }}
+        </h2>
         <div id="nav">
             <Router-link to="/1">На футбол</Router-link>
             <br>
@@ -17,15 +21,26 @@
 
 <script>
 import Header from './components/Header'
+import { onMounted, ref } from 'vue';
+
 
 export default {
     name: 'App',
     components: {
         Header,
-        // MatchdayForm
     },
-    created() {
-        console.log(Window?.Telegram)
+    setup() {
+        const initData = ref(window.Telegram?.webApp?.initData?.user);
+        const initDataUnsafe = ref(window.Telegram?.webApp?.initDataUnsafe?.user);
+
+        onMounted(() => {
+            console.log(window.Telegram);
+        })
+
+        return {
+            initData,
+            initDataUnsafe,
+        }
     }
 }
 </script>
