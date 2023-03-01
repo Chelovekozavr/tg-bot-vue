@@ -30,8 +30,8 @@ export default {
         Header,
     },
     setup() {
-        const initData = ref(window.Telegram?.webApp?.initData?.user);
-        const initDataUnsafe = ref(window.Telegram?.webApp?.initDataUnsafe?.user);
+        const initData = ref(window.Telegram?.WebApp?.initData?.user);
+        const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
 
         onMounted(() => {
             console.log(window.Telegram);
