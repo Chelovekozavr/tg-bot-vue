@@ -3,9 +3,10 @@
     <div class="date">
         <h4>{{ matchDate }}</h4>
     </div>
-    <div class="title">
+    <div class="header-title">
         <h1>{{ homeTeam }}</h1>
         <h1>{{ awayTeam }}</h1>
+        {{ parsedDate }}
     </div>
     <hr>
 </template>
@@ -27,17 +28,21 @@ export default {
             return `${urlParams.get('date')} ${urlParams.get('time')}` || '01.01.01 14:00';
         });
 
+        const parsedDate = computed(() => {
+            return urlParams.get('parsedDate');
+        })
         return {
             matchDate,
             homeTeam,
-            awayTeam
+            awayTeam,
+            parsedDate
         }
     }
 }
 </script>
 
 <style scoped>
-.title {
+.header-title {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;

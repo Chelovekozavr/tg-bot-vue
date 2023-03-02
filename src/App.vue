@@ -38,29 +38,8 @@ export default {
 </script>
 
 <style>
-@media only screen (min-width: 768px){
-
-}
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-}
-hr {
-    margin: 20px 0;
-}
-input[type="radio"] {
-    display: none;
-}
-body {
-    font-family: 'True Gothic Cyr', sans-serif;
-    padding: 0;
-    margin: 0;
-    /*width: 100vw;*/
-    /*max-width: 100vw;*/
-    /*height: 100vh;*/
-    padding: 5vw 10vw;
-    background: #0E3151;
-}
+@import "./css/main.css";
+@import "./css/reset.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

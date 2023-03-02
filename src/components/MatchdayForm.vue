@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="section">
+        <div class="section-with-error">
             <p class="title"><label>Для кого:</label></p>
             <div class="input-container">
                 <input
@@ -48,13 +48,13 @@
                     id="name"
                     v-model="name"
                 >
+                <p v-if="errors.nameError.error" class="error-msg">
+                    {{ errors.nameError.text}}
+                </p>
             </div>
-            <p v-if="errors.nameError.error">
-                {{ errors.nameError.text}}
-            </p>
         </div>
 
-        <div class="section">
+        <div class="section-with-error">
             <p class="title"><label htmlFor="guests">На скількох:</label></p>
             <div class="input-container input-with-buttons-container">
                 <button
@@ -78,10 +78,10 @@
                 >
                     +
                 </button>
+                <p v-if="errors.guestsError.error" class="error-msg">
+                    {{ errors.guestsError.text}}
+                </p>
             </div>
-            <p v-if="errors.guestsError.error">
-                {{ errors.guestsError.text}}
-            </p>
         </div>
 
         <div class="section">
@@ -150,12 +150,15 @@
 </template>
 
 <script>
-import { ref, reactive, watch } from 'vue';
-
+import { ref, reactive, watch, computed } from 'vue';
 
 export default {
     name: "MatchdayForm",
     setup() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchTime = computed(() => {
+            return urlParams.get('time') || '14:00';
+        });
         let time = ref('16:00');
         let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
         // let name = ref('Kaligula');
@@ -235,7 +238,7 @@ export default {
                 return;
             }
 
-            alert('good')
+            // alert('good')
         }
 
         return {
@@ -244,6 +247,7 @@ export default {
             guests,
             place,
             errors,
+            matchTime,
             updateName,
             updateGuests,
             minusGuests,
@@ -255,127 +259,5 @@ export default {
 </script>
 
 <style scoped>
-input {
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: none;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-}
-button {
-    border: none;
-    margin: 0;
-    padding: 0;
-    width: auto;
-    overflow: visible;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-    -webkit-appearance: none;
-    outline: none;
-}
-button:active {
-    transform: scale(0.9);
-}
-.form {
-    margin-top: 80px;
-    text-align: left;
-}
-.section {
-    margin-bottom: 20px;
-}
-.page-title {
-    margin-bottom: 20px;
-}
-.title {
-    margin-bottom: 10px;
-}
-.input-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.input-with-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-.input-with-buttons {
-    text-align: center;
-}
-.input-with-buttons-container > input {
-    width: 60px;
-}
-.btn {
-    font-weight: 700;
-    border-radius: 30px;
-    color: white;
-    background: #0C99E3;
-    transition: .5s;
-    width: auto;
-    padding: 5px 10px;
-}
-.input-btn {
-    height: 34px;
-    width: 34px;
-    border-radius: 50%;
-    padding: 0;
-
-}
-.text-input {
-    width: 100%;
-    height: 30px;
-    border-radius: 30px;
-    padding: 0 10px;
-    background: #fff;
-    color: black;
-}
-.input-container-radio {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 150px);
-    justify-self: center;
-    align-self: center;
-    gap: 20px;
-}
-.radio {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-    user-select: none;
-}
-.radio-txt {
-    white-space: nowrap;
-}
-.radio .radio-btn {
-    position: relative;
-    display: inline-block;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.radio:hover .radio-btn {
-    border-color: #666;
-}
-.radio input[type="radio"]:checked + .radio-btn:after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    height: 12px;
-    width: 12px;
-    background-color: #0C99E3;
-    border-radius: 50%;
-}
 </style>
 

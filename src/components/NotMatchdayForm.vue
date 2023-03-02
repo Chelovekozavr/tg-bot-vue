@@ -1,175 +1,260 @@
 <template>
-    <form action="submit" class="form">
-        <h2>Бронювання</h2>
-        <div>
-            <div>
-                <p><label for="date">Дата:</label></p>
-                <input
-                    type="date"
-                    v-model="date"
-                    id="date"
-                    :min="minDate"
-                    :max="maxDate"
-                >
+    <form @submit.prevent="onSubmit" className="form">
+        <h2 class="page-title">Бронювання</h2>
+        <div class="section">
+            <p class="title">На коли:</p>
+            <div class="input-container-radio">
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="16:00"
+                        v-model="time"
+                        id="16:00"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">16:00</span>
+                </label>
 
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="17:00"
+                        v-model="time"
+                        id="17:00"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">17:00</span>
+                </label>
+
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="18:00"
+                        v-model="time"
+                        id="18:00"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">18:00</span>
+                </label>
             </div>
         </div>
-        <div>
-            <p>На коли:</p>
-            <div>
-                <label for="16:00">16:00</label>
-                <input
-                    type="radio"
-                    value="16:00"
-                    v-model="time"
-                    id="16:00"
-                >
-            </div>
 
-            <div>
-                <label for="17:00">17:00</label>
+        <div class="section-with-error">
+            <p class="title"><label>Для кого:</label></p>
+            <div class="input-container">
                 <input
-                    type="radio"
-                    value="17:00"
-                    v-model="time"
-                    id="17:00"
+                    class="text-input"
+                    type="text"
+                    id="name"
+                    v-model="name"
                 >
-            </div>
-
-            <div>
-                <label for="18:00">18:00</label>
-                <input
-                    type="radio"
-                    value="18:00"
-                    v-model="time"
-                    id="18:00"
-                >
+                <p v-if="errors.nameError.error" class="error-msg">
+                    {{ errors.nameError.text}}
+                </p>
             </div>
         </div>
-        <div>
-            <p><label>Для кого:</label></p>
-            <input
-                id="name"
-                type="text"
-                v-model="name"
-            >
-        </div>
-        <div>
-            <p><label for="guests">На скількох:</label></p>
-            <div>
-                <button>-</button>
+
+        <div class="section-with-error">
+            <p class="title"><label htmlFor="guests">На скількох:</label></p>
+            <div class="input-container input-with-buttons-container">
+                <button
+                    class="input-btn btn"
+                    type="button"
+                    @click="minusGuests"
+                >
+                    -
+                </button>
                 <input
+                    class="text-input input-with-buttons"
                     id="guests"
                     type="number"
-                    min="1"
-                    step="1"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                    v-model="guests"
+                    :value="guests"
+                    @input="updateGuests"
                 >
-                <button>+</button>
+                <button
+                    class="input-btn btn"
+                    type="button"
+                    @click="plusGuests"
+                >
+                    +
+                </button>
+                <p v-if="errors.guestsError.error" class="error-msg">
+                    {{ errors.guestsError.text}}
+                </p>
             </div>
         </div>
-        <div>
-            <p>Побажання по розміщенню:</p>
-            <div>
-                <label for="bar">на барі</label>
-                <input
-                    type="radio"
-                    value="bar"
-                    v-model="place"
-                    id="bar"
-                >
-            </div>
 
-            <div>
-                <label for="tribune">зал з трибуною,</label>
-                <input
-                    type="radio"
-                    value="tribune"
-                    v-model="place"
-                    id="tribune"
-                >
-            </div>
+        <div class="section">
+            <p class="title">Побажання по розміщенню:</p>
+            <div class="input-container-radio">
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="bar"
+                        v-model="place"
+                        id="bar"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">на барі</span>
+                </label>
 
-            <div>
-                <label for="far">дальній зал</label>
-                <input
-                    type="radio"
-                    value="far"
-                    v-model="place"
-                    id="far"
-                >
-            </div>
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="far"
+                        v-model="place"
+                        id="far"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">дальній зал</span>
+                </label>
 
-            <div>
-                <label for="round">круглий стіл</label>
-                <input
-                    type="radio"
-                    value="round"
-                    v-model="place"
-                    id="round"
-                >
-            </div>
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="round"
+                        v-model="place"
+                        id="round"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">круглий стіл</span>
+                </label>
 
-            <div>
-                <label for="center">по центру залу</label>
-                <input
-                    type="radio"
-                    value="center"
-                    v-model="place"
-                    id="center"
-                >
-            </div>
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="tribune"
+                        v-model="place"
+                        id="tribune"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">зал з трибуною</span>
+                </label>
 
+                <label class="radio">
+                    <input
+                        type="radio"
+                        value="center"
+                        v-model="place"
+                        id="center"
+                    >
+                    <span class="radio-btn"></span>
+                    <span class="radio-txt">по центру залу</span>
+                </label>
+
+            </div>
         </div>
+
+        <button class="btn" type="submit">Забронювати</button>
     </form>
 </template>
 
 <script>
-import { ref } from 'vue';
-
+import { ref, reactive, watch } from 'vue';
 
 export default {
     name: "MatchdayForm",
     setup() {
-        const date = ref('0');
-        const time = ref('0');
-        const name = ref('0');
-        const guests = ref('0');
-        const place = ref('0');
+        let time = ref('16:00');
+        let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
+        // let name = ref('Kaligula');
+        let guests = ref(1);
+        let place = ref('bar');
 
-        // const today = new Date();
-        // const maxDate = ref(today.setDate(today.getDate() + 30));
+        // let timeOptions = ref()
 
-        const today = new Date();
-        const maxDateObj = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000));
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        const minDate = `${yyyy}-${mm}-${dd}`;
-        const maxDate = `${maxDateObj.getFullYear()}-${String(maxDateObj.getMonth() + 1).padStart(2, '0')}-${String(maxDateObj.getDate()).padStart(2, '0')}`;
+        let errors = reactive({
+            nameError: {
+                error: false,
+                text: ''
+            },
+            guestsError: {
+                error: false,
+                text: ''
+            }
+        })
+
+        watch(name, (currentValue) => {
+            console.log(currentValue, currentValue.length)
+            if(currentValue.length <= 3) {
+                console.log('less')
+                errors.nameError.error = true;
+                errors.nameError.text = 'Не менше 3 символів';
+            } else if(currentValue.length >= 15) {
+                console.log('more')
+                errors.nameError.error = true;
+                errors.nameError.text = 'Не більше 15 символів';
+            } else {
+                console.log('norm')
+                errors.nameError.error = false;
+                errors.nameError.text = '';
+            }
+        })
+
+        watch(guests, (currentValue) => {
+            if(currentValue < 1) {
+                errors.guestsError.error = true;
+                errors.guestsError.text = 'Недопустиме значення'
+            } else if(currentValue > 20) {
+                errors.guestsError.error = true;
+                errors.guestsError.text = 'Максимальне значення — 20'
+                return;
+            } else {
+                errors.guestsError.error = false;
+                errors.guestsError.text = ''
+            }
+        });
+
+        function minusGuests() {
+            if(guests.value <=1) {
+
+                return;
+            }
+            guests.value--;
+        }
+
+        function plusGuests() {
+            if(guests.value >= 20) {
+                errors.guestsError.error = true;
+                errors.guestsError.text = 'Максимальне значення — 20'
+                return;
+            }
+            guests.value++;
+        }
+
+        function updateGuests(e) {
+            guests.value = e.target.value;
+        }
+
+        function updateName(e) {
+            name.value = e;
+            console.log(e, 'updateVal')
+        }
+
+        function onSubmit() {
+            if(errors.nameError.error || errors.guestsError.error) {
+                return;
+            }
+
+            // alert('good')
+        }
 
         return {
-            date,
             time,
             name,
             guests,
             place,
-            minDate,
-            maxDate
+            errors,
+            updateName,
+            updateGuests,
+            minusGuests,
+            plusGuests,
+            onSubmit
         }
     }
 }
 </script>
 
-<style>
-.form {
-
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+<style scoped>
 </style>
 

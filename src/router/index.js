@@ -8,12 +8,12 @@ const routes = [
         component: MatchdayForm
     },
     {
-        path: '/1',
+        path: '/matchday',
         name: 'MatchdayForm',
         component: MatchdayForm
     },
     {
-        path: '/2',
+        path: '/notMatchday',
         name: 'NotMatchDay',
         component: NotMatchdayForm
     },
