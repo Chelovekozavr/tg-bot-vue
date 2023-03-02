@@ -249,9 +249,18 @@ export default {
                 return;
             }
 
-            window.Telegram.WebApp.sendData('testtest')
+            const data = {
+                name: name.value,
+                time: time.value,
+                guests: guests.value,
+                place: place.value
+            }
+            window.Telegram.WebApp.sendData(JSON.stringify(data));
+
+            // window.Telegram.WebApp.sendData('testtest')
 
             alert('send', window.Telegram.WebApp.sendData)
+            alert(data)
         }
 
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
