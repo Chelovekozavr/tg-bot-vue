@@ -144,8 +144,6 @@
 
             </div>
         </div>
-
-        <button class="btn" type="submit">Забронювати</button>
     </form>
 </template>
 
@@ -182,28 +180,39 @@ export default {
                 console.log('less')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не менше 3 символів';
+
+                return;
             } else if(currentValue.length >= 15) {
                 console.log('more')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не більше 15 символів';
+
+                return;
             } else {
                 console.log('norm')
                 errors.nameError.error = false;
                 errors.nameError.text = '';
+
+                return;
             }
         })
 
         watch(guests, (currentValue) => {
             if(currentValue < 1) {
                 errors.guestsError.error = true;
-                errors.guestsError.text = 'Недопустиме значення'
+                errors.guestsError.text = 'Недопустиме значення';
+
+                return;
             } else if(currentValue > 20) {
                 errors.guestsError.error = true;
-                errors.guestsError.text = 'Максимальне значення — 20'
+                errors.guestsError.text = 'Максимальне значення — 20';
+
                 return;
             } else {
                 errors.guestsError.error = false;
-                errors.guestsError.text = ''
+                errors.guestsError.text = '';
+
+                return;
             }
         });
 
@@ -231,16 +240,24 @@ export default {
 
         function updateName(e) {
             name.value = e;
-            console.log(e, 'updateVal')
+            console.log(e, 'updateVal');
         }
 
         function onSubmit() {
             if(errors.nameError.error || errors.guestsError.error) {
+
                 return;
             }
 
-            // alert('good')
+            window.Telegram.WebApp.sendData({
+                time: time.value,
+                name: name.value,
+                guests: guests.value,
+                place: place.value,
+            })
         }
+
+        window.Telegram.WebApp.MainButton.onClick(onSubmit);
 
         return {
             time,

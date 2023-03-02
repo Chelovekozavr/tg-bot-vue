@@ -244,8 +244,6 @@ export default {
             if(errors.nameError.error || errors.guestsError.error) {
                 return;
             }
-
-            // alert('good')
         }
 
         return {

@@ -34,7 +34,8 @@ export default {
     setup() {
         window.Telegram.WebApp.MainButton.text = 'Забронювати'
         window.Telegram.WebApp.MainButton.isVisible = true;
-        window.Telegram.WebApp.MainButton.text = 'Забронювати'
+        console.log(window.Telegram.WebApp)
+
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
 
@@ -54,15 +55,6 @@ export default {
             const dateObj = new Date(dateString);
             return dateObj;
         });
-
-        // function submit() {
-        //     alert('submit')
-        // }
-
-        console.log(window.Telegram.WebApp, 'window.Telegram.WebApp')
-
-        // window.Telegram.MainButton.onClick(submit)
-
 
         return {
             matchDate,
