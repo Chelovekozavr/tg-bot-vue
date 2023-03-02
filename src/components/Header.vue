@@ -29,7 +29,7 @@ export default {
         });
 
         const parsedDate = computed(() => {
-            return urlParams.get('parsedDate');
+            return urlParams.get('parsedDate') || 'noData';
         })
         return {
             matchDate,
