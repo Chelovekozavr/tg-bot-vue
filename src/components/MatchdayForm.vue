@@ -151,7 +151,7 @@
 
 <script>
 import { ref, reactive, watch, computed } from 'vue';
-import axios from 'axios';
+// import axios from 'axios';
 export default {
     name: "MatchdayForm",
     setup() {
@@ -161,6 +161,7 @@ export default {
         });
         let time = ref('16:00');
         let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
+        // let name = ref('Kaligula');
         let guests = ref(1);
         let place = ref('bar');
 
@@ -249,7 +250,12 @@ export default {
 
                 return;
             }
-
+            console.log(
+                window?.Telegram?.WebApp?.initDataUnsafe
+            )
+            console.log(
+                window?.Telegram?.WebApp
+            )
             const data = {
                 name: name.value,
                 time: time.value,
@@ -257,10 +263,26 @@ export default {
                 place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123
             }
+            // window.Telegram.WebApp.sendData(JSON.stringify(data));
 
-            axios.post('http://localhost:8000/web-data', {
-                ...data
+
+            // axios.post('http://localhost:8000/web-data', {
+            //     ...data
+            // })
+
+            fetch('http://localhost:8000/reserve', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
             })
+
+
+            // window.Telegram.WebApp.sendData('testtest')
+
+            // alert('send', window.Telegram.WebApp.sendData)
+            // alert(data);
 
             window.Telegram.WebApp.close();
         }
