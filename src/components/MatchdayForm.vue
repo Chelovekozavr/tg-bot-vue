@@ -249,12 +249,7 @@ export default {
                 return;
             }
 
-            window.Telegram.WebApp.sendData({
-                time: time.value,
-                name: name.value,
-                guests: guests.value,
-                place: place.value,
-            })
+            window.Telegram.WebApp.sendData('testtest')
         }
 
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
