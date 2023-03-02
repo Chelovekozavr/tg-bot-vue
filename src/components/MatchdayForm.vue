@@ -218,7 +218,8 @@ export default {
         function plusGuests() {
             if(guests.value >= 20) {
                 errors.guestsError.error = true;
-                errors.guestsError.text = 'Максимальне значення — 20'
+                errors.guestsError.text = 'Максимальне значення — 20';
+
                 return;
             }
             guests.value++;

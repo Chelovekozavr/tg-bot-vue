@@ -1,41 +1,36 @@
 <template>
-    <hr>
-    <div class="date">
-        <h4>{{ matchDate }}</h4>
+    <div>
+        <hr>
+        <div class="date">
+            <h4>{{ formattedDate }}</h4>
+        </div>
+        <div class="header-title">
+            <h1>{{ homeTeam }}</h1>
+            <h1>{{ awayTeam }}</h1>
+        </div>
+        <hr>
     </div>
-    <div class="header-title">
-        <h1>{{ homeTeam }}</h1>
-        <h1>{{ awayTeam }}</h1>
-        {{ parsedDate }}
-    </div>
-    <hr>
 </template>
 
 <script>
-import { computed } from '@vue/reactivity';
-
+import { computed } from 'vue';
 export default {
     name: 'Header',
-    setup() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const homeTeam = computed(() => {
-            return urlParams.get('homeTeam');
+    props: {
+        matchDate: Object,
+        homeTeam: String,
+        awayTeam: String
+    },
+    setup(props) {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const homeTeam = computed(() => {
+    //         return urlParams.get('homeTeam');
+    //     });
+        const formattedDate = computed(() => {
+            return props.matchDate.toLocaleString().split(',').join('');
         });
-        const awayTeam = computed(() => {
-            return urlParams.get('awayTeam');
-        });
-        const matchDate = computed(() => {
-            return `${urlParams.get('date')} ${urlParams.get('time')}` || '01.01.01 14:00';
-        });
-
-        const parsedDate = computed(() => {
-            return urlParams.get('parsedDate') || 'noData';
-        })
         return {
-            matchDate,
-            homeTeam,
-            awayTeam,
-            parsedDate
+            formattedDate
         }
     }
 }

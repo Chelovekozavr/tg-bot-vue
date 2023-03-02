@@ -5,7 +5,13 @@
 <!--            <br>-->
 <!--            <Router-link to="/2">Відпочити</Router-link>-->
         </div>
-        <Header></Header>
+        <Header
+            v-if="parsedDate"
+            :match-date="parsedDate"
+            :home-team="homeTeam"
+            :away-team="awayTeam"
+        >
+        </Header>
         <router-view></router-view>
 
         <p>{{ Window?.Telegram?.WebApp?.initData }}</p>
@@ -17,19 +23,46 @@
 
 <script>
 import Header from './components/Header'
-import {  ref } from 'vue';
-
+import { computed, ref, onMounted } from 'vue';
 
 export default {
     name: 'App',
     components: {
         Header,
     },
+
     setup() {
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const homeTeam = computed(() => {
+            return urlParams.get('homeTeam') || 'Dynamo';
+        });
+        const awayTeam = computed(() => {
+            return urlParams.get('awayTeam') || 'Shakhtar';
+        });
+        const matchDate = computed(() => {
+            return `${urlParams.get('date')} ${urlParams.get('time')}` || '01.01.01 14:00';
+        });
+
+        const parsedDate = computed(() => {
+            const dateString = urlParams.get('parsedDate') || null;
+            const dateObj = new Date(dateString);
+            return dateObj;
+        });
+
+        onMounted(() => {
+            window.Telegram.MainButton.setParams({
+                text: 'Забронювати'
+            })
+        })
+
         return {
+            matchDate,
+            homeTeam,
+            awayTeam,
+            parsedDate,
             initData,
             initDataUnsafe,
         }
