@@ -249,9 +249,9 @@ export default {
                 return;
             }
 
-            alert('send')
-
             window.Telegram.WebApp.sendData('testtest')
+
+            alert('send', window.Telegram.WebApp.sendData)
         }
 
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
