@@ -53,10 +53,17 @@ export default {
         });
 
         onMounted(() => {
-            window.Telegram.MainButton.setParams({
+            window.Telegram.WebApp.MainButton.setParams({
                 text: 'Забронювати'
             })
         })
+
+        function submit() {
+            alert('submit')
+        }
+
+        window.Telegram.MainButton.onClick(submit)
+
 
         return {
             matchDate,
