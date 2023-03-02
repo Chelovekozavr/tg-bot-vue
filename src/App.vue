@@ -32,6 +32,7 @@ export default {
     },
 
     setup() {
+        window.Telegram.WebApp.MainButton.text = 'Забронювати'
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
 
@@ -58,11 +59,13 @@ export default {
             })
         })
 
-        function submit() {
-            alert('submit')
-        }
+        // function submit() {
+        //     alert('submit')
+        // }
 
-        window.Telegram.MainButton.onClick(submit)
+        console.log(window.Telegram.WebApp, 'window.Telegram.WebApp')
+
+        // window.Telegram.MainButton.onClick(submit)
 
 
         return {
