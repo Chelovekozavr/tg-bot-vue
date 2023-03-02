@@ -23,7 +23,7 @@
 
 <script>
 import Header from './components/Header'
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
     name: 'App',
@@ -32,6 +32,8 @@ export default {
     },
 
     setup() {
+        window.Telegram.WebApp.MainButton.text = 'Забронювати'
+        window.Telegram.WebApp.MainButton.isVisible = true;
         window.Telegram.WebApp.MainButton.text = 'Забронювати'
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
@@ -52,12 +54,6 @@ export default {
             const dateObj = new Date(dateString);
             return dateObj;
         });
-
-        onMounted(() => {
-            window.Telegram.WebApp.MainButton.setParams({
-                text: 'Забронювати'
-            })
-        })
 
         // function submit() {
         //     alert('submit')
