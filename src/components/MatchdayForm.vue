@@ -144,12 +144,14 @@
 
             </div>
         </div>
+
+        <button @click="onSubmit">subm</button>
     </form>
 </template>
 
 <script>
 import { ref, reactive, watch, computed } from 'vue';
-
+import axios from 'axios';
 export default {
     name: "MatchdayForm",
     setup() {
@@ -159,7 +161,6 @@ export default {
         });
         let time = ref('16:00');
         let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
-        // let name = ref('Kaligula');
         let guests = ref(1);
         let place = ref('bar');
 
@@ -253,14 +254,15 @@ export default {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
-                place: place.value
+                place: place.value,
+                query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123
             }
-            window.Telegram.WebApp.sendData(JSON.stringify(data));
 
-            // window.Telegram.WebApp.sendData('testtest')
+            axios.post('http://localhost:8000/web-data', {
+                ...data
+            })
 
-            alert('send', window.Telegram.WebApp.sendData)
-            alert(data)
+            window.Telegram.WebApp.close();
         }
 
         window.Telegram.WebApp.MainButton.onClick(onSubmit);

@@ -34,7 +34,11 @@ export default {
     setup() {
         window.Telegram.WebApp.MainButton.text = 'Забронювати'
         window.Telegram.WebApp.MainButton.isVisible = true;
-        console.log(window.Telegram.WebApp)
+        console.log(window.Telegram)
+        console.log(window.Telegram.answerWebAppQuery)
+        console.log(window.Telegram.WebApp.answerWebAppQuery)
+        console.log(window.Telegram.WebApp.initData.answerWebAppQuery)
+        console.log(window.answerWebAppQuery)
 
         const initData = ref(window.Telegram?.WebApp?.initData?.user);
         const initDataUnsafe = ref(window.Telegram?.WebApp?.initDataUnsafe?.user);
