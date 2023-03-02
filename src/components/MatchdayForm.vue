@@ -249,6 +249,8 @@ export default {
                 return;
             }
 
+            alert('send')
+
             window.Telegram.WebApp.sendData('testtest')
         }
 
