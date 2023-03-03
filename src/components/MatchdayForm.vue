@@ -112,11 +112,10 @@
 <script>
 import { ref, reactive, watch, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
-// import axios from 'axios';
+import axios from 'axios';
 export default {
     name: "MatchdayForm",
     setup() {
-        console.log(places)
         const urlParams = new URLSearchParams(window.location.search);
         const matchTime = computed(() => {
             return urlParams.get('time') || '14:00';
@@ -126,7 +125,6 @@ export default {
         // let name = ref('Kaligula');
         let guests = ref(1);
         let place = ref(1);
-
         let errors = reactive({
             nameError: {
                 error: false,
@@ -137,80 +135,62 @@ export default {
                 text: ''
             }
         })
-
         watch(name, (currentValue) => {
-            console.log(currentValue, currentValue.length)
             if(currentValue.length <= 3) {
                 console.log('less')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не менше 3 символів';
-
                 return;
             } else if(currentValue.length >= 15) {
                 console.log('more')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не більше 15 символів';
-
                 return;
             } else {
                 console.log('norm')
                 errors.nameError.error = false;
                 errors.nameError.text = '';
-
                 return;
             }
         })
-
         watch(guests, (currentValue) => {
             if(currentValue < 1) {
                 errors.guestsError.error = true;
                 errors.guestsError.text = 'Недопустиме значення';
-
                 return;
             } else if(currentValue > 20) {
                 errors.guestsError.error = true;
                 errors.guestsError.text = 'Максимальне значення — 20';
-
                 return;
             } else {
                 errors.guestsError.error = false;
                 errors.guestsError.text = '';
-
                 return;
             }
         });
-
         function minusGuests() {
             if(guests.value <=1) {
-
                 return;
             }
             guests.value--;
         }
-
         function plusGuests() {
             if(guests.value >= 20) {
                 errors.guestsError.error = true;
                 errors.guestsError.text = 'Максимальне значення — 20';
-
                 return;
             }
             guests.value++;
         }
-
         function updateGuests(e) {
             guests.value = e.target.value;
         }
-
         function updateName(e) {
             name.value = e;
-            console.log(e, 'updateVal');
         }
-
-        function onSubmit() {
+        async function onSubmit() {
             if(errors.nameError.error || errors.guestsError.error) {
                 alert('onerror')
-
                 return;
             }
             // console.log(
@@ -227,42 +207,43 @@ export default {
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: urlParams.get('date'),
             }
-
-
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
+            async function sendData() {
+                alert('on send data')
+                let res = await axios.post('http://localhost:8000/reserve', {
+                    ...data
+                }).then((response) => {
+                    console.log(response.data)
+                    return response.data.done
+                })
+                alert('on send data fin')
+                alert(res)
+            }
+
+            sendData();
 
 
-            // axios.post('http://localhost:8000/web-data', {
-            //     ...data
+
+            // alert(res.data)
+            // fetch('http://localhost:8000/reserve', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-type': 'application/json'
+            //     },
+            //     body: JSON.stringify(data)
+            // }).then((response) => {
+            //     return response.json()
+            // }).then((response) => {
+            //     alert('on response 2')
+            //     let res = JSON.stringify(response)
+            //     alert(res);
+            //     console.log(res)
+            //     return res;
             // })
-
-            fetch('http://localhost:8000/reserve', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then((response) => {
-
-                return response.json()
-            }).then((response) => {
-                alert('on response 2')
-
-                let res = JSON.stringify(response)
-                alert(res);
-
-                console.log(res)
-                return res;
-            })
-
-
             alert('on end')
-
             // window.Telegram.WebApp.close();
         }
-
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
-
         return {
             time,
             name,
@@ -280,7 +261,5 @@ export default {
     }
 }
 </script>
-
 <style scoped>
 </style>
-
