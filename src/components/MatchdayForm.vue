@@ -208,6 +208,7 @@ export default {
         }
 
         function onSubmit() {
+            alert('onSubmit')
             if(errors.nameError.error || errors.guestsError.error) {
 
                 return;
