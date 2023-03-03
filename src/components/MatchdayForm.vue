@@ -111,7 +111,7 @@
 
 <script>
 import { ref, reactive, watch, computed } from 'vue';
-import places from '../helpers/placeEnum';
+import { places } from '../helpers/placeEnum';
 // import axios from 'axios';
 export default {
     name: "MatchdayForm",
@@ -125,7 +125,7 @@ export default {
         let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
         // let name = ref('Kaligula');
         let guests = ref(1);
-        let place = ref('bar');
+        let place = ref(1);
 
         let errors = reactive({
             nameError: {
@@ -239,6 +239,14 @@ export default {
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify(data)
+            }).then((response) => {
+                return response.json()
+
+            }).then((response) => {
+                let res = JSON.stringify(response)
+                alert(res);
+                console.log(res)
+                return res;
             })
 
             window.Telegram.WebApp.close();
