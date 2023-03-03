@@ -105,7 +105,7 @@
             </div>
         </div>
 
-        <button @click="onSubmit">subm</button>
+        <button type="submit">subm</button>
     </form>
 </template>
 
@@ -208,7 +208,6 @@ export default {
         }
 
         function onSubmit() {
-            alert('onSubmit')
             if(errors.nameError.error || errors.guestsError.error) {
                 alert('onerror')
 
@@ -229,7 +228,6 @@ export default {
                 date: urlParams.get('date'),
             }
 
-            alert('on data')
 
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
 
@@ -245,10 +243,8 @@ export default {
                 },
                 body: JSON.stringify(data)
             }).then((response) => {
-                alert('on response')
 
                 return response.json()
-
             }).then((response) => {
                 alert('on response 2')
 
