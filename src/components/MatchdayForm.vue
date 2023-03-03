@@ -210,15 +210,16 @@ export default {
         function onSubmit() {
             alert('onSubmit')
             if(errors.nameError.error || errors.guestsError.error) {
+                alert('onerror')
 
                 return;
             }
-            console.log(
-                window?.Telegram?.WebApp?.initDataUnsafe
-            )
-            console.log(
-                window?.Telegram?.WebApp
-            )
+            // console.log(
+            //     window?.Telegram?.WebApp?.initDataUnsafe
+            // )
+            // console.log(
+            //     window?.Telegram?.WebApp
+            // )
             const data = {
                 name: name.value,
                 time: time.value,
@@ -227,6 +228,9 @@ export default {
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: urlParams.get('date'),
             }
+
+            alert('on data')
+
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
 
 
@@ -241,14 +245,21 @@ export default {
                 },
                 body: JSON.stringify(data)
             }).then((response) => {
+                alert('on response')
+
                 return response.json()
 
             }).then((response) => {
+                alert('on response 2')
+
                 let res = JSON.stringify(response)
                 alert(res);
                 console.log(res)
                 return res;
             })
+
+
+            alert('on end')
 
             // window.Telegram.WebApp.close();
         }
