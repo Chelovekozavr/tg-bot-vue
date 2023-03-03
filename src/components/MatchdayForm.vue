@@ -85,63 +85,23 @@
         </div>
 
         <div class="section">
+
             <p class="title">Побажання по розміщенню:</p>
             <div class="input-container-radio">
-                <label class="radio">
+                <label
+                    v-for="(item, index) in places"
+                    :key="`${index}-${item.value}-place`"
+                    class="radio"
+                >
                     <input
                         type="radio"
-                        value="bar"
+                        :value="item.value"
                         v-model="place"
-                        id="bar"
+                        :id="item.title"
                     >
                     <span class="radio-btn"></span>
-                    <span class="radio-txt">на барі</span>
+                    <span class="radio-txt">{{ item.titleUa }}</span>
                 </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="far"
-                        v-model="place"
-                        id="far"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">дальній зал</span>
-                </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="round"
-                        v-model="place"
-                        id="round"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">круглий стіл</span>
-                </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="tribune"
-                        v-model="place"
-                        id="tribune"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">зал з трибуною</span>
-                </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="center"
-                        v-model="place"
-                        id="center"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">по центру залу</span>
-                </label>
-
             </div>
         </div>
 
@@ -151,10 +111,12 @@
 
 <script>
 import { ref, reactive, watch, computed } from 'vue';
+import places from '../helpers/placeEnum';
 // import axios from 'axios';
 export default {
     name: "MatchdayForm",
     setup() {
+        console.log(places)
         const urlParams = new URLSearchParams(window.location.search);
         const matchTime = computed(() => {
             return urlParams.get('time') || '14:00';
@@ -260,8 +222,9 @@ export default {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
-                place: place.value,
-                query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123
+                place: places.find(item => item.value === place.value).value,
+                query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
+                date: urlParams.get('date'),
             }
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
 
@@ -278,12 +241,6 @@ export default {
                 body: JSON.stringify(data)
             })
 
-
-            // window.Telegram.WebApp.sendData('testtest')
-
-            // alert('send', window.Telegram.WebApp.sendData)
-            // alert(data);
-
             window.Telegram.WebApp.close();
         }
 
@@ -296,6 +253,7 @@ export default {
             place,
             errors,
             matchTime,
+            places,
             updateName,
             updateGuests,
             minusGuests,
