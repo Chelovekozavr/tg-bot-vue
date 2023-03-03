@@ -254,6 +254,7 @@ export default {
 
                 let res = JSON.stringify(response)
                 alert(res);
+
                 console.log(res)
                 return res;
             })
