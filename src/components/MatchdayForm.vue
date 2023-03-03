@@ -249,7 +249,7 @@ export default {
                 return res;
             })
 
-            window.Telegram.WebApp.close();
+            // window.Telegram.WebApp.close();
         }
 
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
