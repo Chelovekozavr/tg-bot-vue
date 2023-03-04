@@ -22,9 +22,18 @@ textarea:focus, input:focus{
     outline: 2px solid var(--grey-2);
 }
 body {
-    font-family: 'Roboto', sans-serif;
     background: var(--backgound-color);
     padding: 5vw 10vw;
+}
+.app {
+    font-family: Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: mintcream;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 450px;
 }
 .form {
     margin-top: var(--spacing-xxl);
@@ -134,4 +143,8 @@ body {
     bottom: 0;
     color: var(--error-color);
     font-size: 12px;
+}
+.top-match-comment {
+    font-size: 12px;
+
 }

@@ -4,37 +4,19 @@
         <div class="section">
             <p class="title">На коли:</p>
             <div class="input-container-radio">
-                <label class="radio">
+                <label
+                    v-for="(item, index) in matchTimeOptions"
+                    :key="`${index}-${item}-place`"
+                    class="radio"
+                >
                     <input
                         type="radio"
-                        value="16:00"
+                        :value="item"
                         v-model="time"
-                        id="16:00"
+                        id="item"
                     >
                     <span class="radio-btn"></span>
-                    <span class="radio-txt">16:00</span>
-                </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="17:00"
-                        v-model="time"
-                        id="17:00"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">17:00</span>
-                </label>
-
-                <label class="radio">
-                    <input
-                        type="radio"
-                        value="18:00"
-                        v-model="time"
-                        id="18:00"
-                    >
-                    <span class="radio-btn"></span>
-                    <span class="radio-txt">18:00</span>
+                    <span class="radio-txt">{{ item }}</span>
                 </label>
             </div>
         </div>
@@ -104,8 +86,13 @@
                 </label>
             </div>
         </div>
-
-        <button type="submit">subm</button>
+        <p
+            v-if="topMatch"
+            class="top-match-comment"
+        >
+            * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
+        </p>
+        <button type="submit" class="btn">subm</button>
     </form>
 </template>
 
@@ -117,14 +104,46 @@ export default {
     name: "MatchdayForm",
     setup() {
         const urlParams = new URLSearchParams(window.location.search);
-        const matchTime = computed(() => {
-            return urlParams.get('time') || '14:00';
+        const topMatch = urlParams.get('topMatch');
+        const matchTimeOptions = computed(() => {
+            const date = new Date(urlParams.get('parsedDate'))
+            let tempDate = date;
+            const topMatch = urlParams.get('topMatch');
+            const msPerMinute = 60000;
+            const timeGap = 15;
+            const topMatchTimeGap = 30;
+
+            function getTimeOptions(date) {
+                if(topMatch) {
+                    tempDate = minusTime(date, topMatchTimeGap);
+                }
+                function minusTime(time) {
+                    tempDate = new Date(time - timeGap * msPerMinute);
+                    return tempDate;
+                }
+                function formatOption(opt) {
+                    return opt.toLocaleString("uk-UA", {hour: '2-digit', minute: '2-digit'});
+                }
+
+                return [
+                    formatOption(minusTime(tempDate, timeGap)),
+                    formatOption(minusTime(tempDate, timeGap)),
+                    formatOption(minusTime(tempDate, timeGap)),
+                ]
+            }
+            const res = getTimeOptions(date).reverse();
+
+            return res;
         });
-        let time = ref('16:00');
+
+
+        let time = ref(matchTimeOptions.value[0]);
         let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
-        // let name = ref('Kaligula');
         let guests = ref(1);
         let place = ref(1);
+
+
+
         let errors = reactive({
             nameError: {
                 error: false,
@@ -134,20 +153,18 @@ export default {
                 error: false,
                 text: ''
             }
-        })
+        });
+
         watch(name, (currentValue) => {
             if(currentValue.length <= 3) {
-                console.log('less')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не менше 3 символів';
                 return;
             } else if(currentValue.length >= 15) {
-                console.log('more')
                 errors.nameError.error = true;
                 errors.nameError.text = 'Не більше 15 символів';
                 return;
             } else {
-                console.log('norm')
                 errors.nameError.error = false;
                 errors.nameError.text = '';
                 return;
@@ -175,7 +192,7 @@ export default {
             guests.value--;
         }
         function plusGuests() {
-            if(guests.value >= 20) {
+            if(guests.value >= 21) {
                 errors.guestsError.error = true;
                 errors.guestsError.text = 'Максимальне значення — 20';
                 return;
@@ -190,15 +207,9 @@ export default {
         }
         async function onSubmit() {
             if(errors.nameError.error || errors.guestsError.error) {
-                alert('onerror')
                 return;
             }
-            // console.log(
-            //     window?.Telegram?.WebApp?.initDataUnsafe
-            // )
-            // console.log(
-            //     window?.Telegram?.WebApp
-            // )
+
             const data = {
                 name: name.value,
                 time: time.value,
@@ -209,49 +220,29 @@ export default {
             }
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
             async function sendData() {
-                alert('on send data')
-                let res = await axios.post('http://localhost:8000/reserve', {
+                await axios.post('http://localhost:8000/reserve', {
                     ...data
                 }).then((response) => {
                     console.log(response.data)
                     return response.data.done
+                }).catch((err) => {
+                    console.log(err)
                 })
-                alert('on send data fin')
-                alert(res)
             }
 
             sendData();
-
-
-
-            // alert(res.data)
-            // fetch('http://localhost:8000/reserve', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-type': 'application/json'
-            //     },
-            //     body: JSON.stringify(data)
-            // }).then((response) => {
-            //     return response.json()
-            // }).then((response) => {
-            //     alert('on response 2')
-            //     let res = JSON.stringify(response)
-            //     alert(res);
-            //     console.log(res)
-            //     return res;
-            // })
-            alert('on end')
-            // window.Telegram.WebApp.close();
         }
         window.Telegram.WebApp.MainButton.onClick(onSubmit);
+
         return {
             time,
             name,
             guests,
             place,
             errors,
-            matchTime,
+            topMatch,
             places,
+            matchTimeOptions,
             updateName,
             updateGuests,
             minusGuests,
