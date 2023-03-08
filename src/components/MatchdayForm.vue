@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { ref, reactive, watch, computed } from 'vue';
+import { ref, reactive, watch, computed, onMounted } from 'vue';
 import { places } from '../helpers/placeEnum';
 import axios from 'axios';
 export default {
@@ -144,10 +144,6 @@ export default {
         let place = ref(1);
         let name = ref('Kaligula');
 
-        if(window.Telegram) {
-            name.value = ref(window.Telegram.WebApp.initDataUnsafe.user.username);
-        }
-
         let errors = reactive({
             nameError: {
                 error: false,
@@ -190,7 +186,6 @@ export default {
             }
         });
         function minusGuests() {
-            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
             alert(typeof window.Telegram.WebApp.initDataUnsafe.user.username)
             alert(window.Telegram.WebApp.initDataUnsafe.user)
             if(guests.value <=1) {
@@ -244,6 +239,12 @@ export default {
 
             window.Telegram.WebApp.MainButton.onClick(onSubmit);
         }
+
+        onMounted(() => {
+            if(window.Telegram) {
+                name.value = ref(window.Telegram.WebApp.initDataUnsafe.user.username);
+            }
+        })
 
         return {
             time,
