@@ -220,7 +220,7 @@ export default {
             }
             // window.Telegram.WebApp.sendData(JSON.stringify(data));
             async function sendData() {
-                await axios.post('http://localhost:8000/reserve', {
+                await axios.post('http://localhost:8085/reserve', {
                     ...data
                 }).then((response) => {
                     console.log(response.data)
