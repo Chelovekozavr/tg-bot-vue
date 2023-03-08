@@ -93,13 +93,11 @@
             * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
         </p>
         <button type="submit" class="btn">subm</button>
-
-        {{ name }}
     </form>
 </template>
 
 <script>
-import { ref, reactive, watch, computed, onMounted } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
 import axios from 'axios';
 export default {
@@ -144,6 +142,10 @@ export default {
         let place = ref(1);
         let name = ref('Kaligula');
 
+        if(Object.keys(window.Telegram?.WebApp?.initDataUnsafe).length) {
+            name.value = window.Telegram.WebApp.initDataUnsafe.user.username;
+        }
+
         let errors = reactive({
             nameError: {
                 error: false,
@@ -186,8 +188,8 @@ export default {
             }
         });
         function minusGuests() {
-            alert(typeof window.Telegram.WebApp.initDataUnsafe.user.username)
-            alert(window.Telegram.WebApp.initDataUnsafe.user)
+            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
+            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
             if(guests.value <=1) {
                 return;
             }
@@ -236,15 +238,8 @@ export default {
         }
 
         if(window.Telegram) {
-
             window.Telegram.WebApp.MainButton.onClick(onSubmit);
         }
-
-        onMounted(() => {
-            if(window.Telegram) {
-                name.value = ref(window.Telegram.WebApp.initDataUnsafe.user.username);
-            }
-        })
 
         return {
             time,
