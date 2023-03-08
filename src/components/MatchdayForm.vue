@@ -93,6 +93,10 @@
             * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
         </p>
         <button type="submit" class="btn">subm</button>
+
+        {{ name }}
+        {{ name.value }}
+        {{ window.Telegram.WebApp.initDataUnsafe.user.username }}
     </form>
 </template>
 
@@ -142,7 +146,7 @@ export default {
         let place = ref(1);
         let name = ref('Kaligula');
         if(window.Telegram) {
-            name.value = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username);
+            name.value = ref(window.Telegram.WebApp.initDataUnsafe.user.username);
         }
 
         let errors = reactive({
