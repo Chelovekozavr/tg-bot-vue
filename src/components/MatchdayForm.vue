@@ -104,6 +104,8 @@ export default {
     setup() {
         const urlParams = new URLSearchParams(window.location.search);
         const topMatch = urlParams.get('topMatch') === 'true';
+        // const url = urlParams.get('url');
+
         const matchTimeOptions = computed(() => {
             const date = new Date(urlParams.get('parsedDate'))
             let tempDate = date;
@@ -187,8 +189,6 @@ export default {
             }
         });
         function minusGuests() {
-            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
-            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
             if(guests.value <=1) {
                 return;
             }

@@ -1,12 +1,18 @@
 <template>
-    <div id="app" class="app">
+    <div
+        v-if="!isLoading"
+        id="app"
+        class="app"
+    >
         <div id="nav">
         </div>
         <Header
             v-if="parsedDate"
             :match-date="parsedDate"
             :home-team="homeTeam"
+            :home-team-logo="homeTeamLogo"
             :away-team="awayTeam"
+            :away-team-logo="awayTeamLogo"
         >
         </Header>
         <router-view></router-view>
@@ -18,7 +24,9 @@
 
 <script>
 import Header from './components/Header'
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import getTeamLogo from './helpers/ctawler';
+
 
 export default {
     name: 'App',
@@ -27,6 +35,10 @@ export default {
     },
 
     setup() {
+        let homeTeamLogo = ref('');
+        let awayTeamLogo = ref('');
+        let isLoading = ref(false);
+
         window.Telegram.WebApp.MainButton.text = 'Забронювати'
         window.Telegram.WebApp.MainButton.isVisible = true;
 
@@ -39,9 +51,6 @@ export default {
         const awayTeam = computed(() => {
             return urlParams.get('awayTeam') || 'Shakhtar';
         });
-        // const matchDate = computed(() => {
-        //     return `${urlParams.get('date')} ${urlParams.get('time')}` || '01.01.01 14:00';
-        // });
 
         const parsedDate = computed(() => {
             const dateString = urlParams.get('parsedDate') || null;
@@ -49,10 +58,24 @@ export default {
             return dateObj;
         });
 
+
+        onMounted(async () => {
+            isLoading.value = true;
+            const urlParams = new URLSearchParams(window.location.search);
+            const url = urlParams.get('url');
+            const flashScoreData = await getTeamLogo(url);
+            homeTeamLogo.value = `https://www.flashscore.ua${flashScoreData.home[0].image_path}`;
+            awayTeamLogo.value = `https://www.flashscore.ua${flashScoreData.away[0].image_path}`;
+            isLoading.value = false;
+        });
+
         return {
             homeTeam,
             awayTeam,
+            homeTeamLogo,
+            awayTeamLogo,
             parsedDate,
+            isLoading,
         }
     }
 }
