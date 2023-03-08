@@ -143,6 +143,7 @@ export default {
         let guests = ref(1);
         let place = ref(1);
         let name = ref('Kaligula');
+
         if(window.Telegram) {
             name.value = ref(window.Telegram.WebApp.initDataUnsafe.user.username);
         }
@@ -189,6 +190,9 @@ export default {
             }
         });
         function minusGuests() {
+            alert(window.Telegram.WebApp.initDataUnsafe.user.username)
+            alert(typeof window.Telegram.WebApp.initDataUnsafe.user.username)
+            alert(window.Telegram.WebApp.initDataUnsafe.user)
             if(guests.value <=1) {
                 return;
             }
