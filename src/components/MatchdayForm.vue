@@ -104,7 +104,7 @@ export default {
     name: "MatchdayForm",
     setup() {
         const urlParams = new URLSearchParams(window.location.search);
-        const topMatch = urlParams.get('topMatch');
+        const topMatch = urlParams.get('topMatch') === 'true';
         const matchTimeOptions = computed(() => {
             const date = new Date(urlParams.get('parsedDate'))
             let tempDate = date;
@@ -138,11 +138,12 @@ export default {
 
 
         let time = ref(matchTimeOptions.value[0]);
-        let name = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
         let guests = ref(1);
         let place = ref(1);
-
-
+        let name = ref('Kaligula');
+        if(window.Telegram) {
+            name.value = ref(window?.Telegram?.WebApp?.initDataUnsafe?.user?.username);
+        }
 
         let errors = reactive({
             nameError: {
@@ -232,7 +233,11 @@ export default {
 
             sendData();
         }
-        window.Telegram.WebApp.MainButton.onClick(onSubmit);
+
+        if(window.Telegram) {
+
+            window.Telegram.WebApp.MainButton.onClick(onSubmit);
+        }
 
         return {
             time,
