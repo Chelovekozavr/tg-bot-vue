@@ -95,8 +95,6 @@
         <button type="submit" class="btn">subm</button>
 
         {{ name }}
-        {{ name.value }}
-        {{ window.Telegram.WebApp.initDataUnsafe.user.username }}
     </form>
 </template>
 
