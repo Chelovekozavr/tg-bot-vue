@@ -234,6 +234,7 @@ export default {
             }
 
             sendData();
+            window.Telegram.WebApp.close();
         }
 
         if(window.Telegram) {
