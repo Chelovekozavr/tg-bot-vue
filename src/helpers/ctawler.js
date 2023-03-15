@@ -1,7 +1,6 @@
 import axios from "axios";
 
 async function getTeamLogo(matchUrl = "https://flashscore.ua/match/G67uHGC6") {
-    // const matchUrl = "https://flashscore.ua/match/G67uHGC6"
     const [, matchID] = matchUrl.split("match/");
 
     let matchInfo = {}
@@ -13,7 +12,7 @@ async function getTeamLogo(matchUrl = "https://flashscore.ua/match/G67uHGC6") {
         matchInfo.home = parsedData.participantsData.home
         matchInfo.away = parsedData.participantsData.away
         matchInfo.tournament = parsedData.header.tournament
-        console.log(matchInfo);
+        // console.log(matchInfo);
     }).catch((error) => {console.log('Error: ', error.message)});
     const statsUrl = "https://d.flashscore.ua/x/feed/df_st_2_" + matchID
     let stats = []
@@ -28,10 +27,11 @@ async function getTeamLogo(matchUrl = "https://flashscore.ua/match/G67uHGC6") {
                 stats.push(line)
             }
         }
-        console.log(stats)
+        // console.log(stats)
     })
 
     return matchInfo;
 }
+
 
 export default getTeamLogo;
