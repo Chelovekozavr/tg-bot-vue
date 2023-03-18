@@ -5,89 +5,91 @@
             :away-team-logo="awayTeamLogo"
         >
         </FormHeader>
+        <v-card-item>
+            <div class="mb-4">
+                <p class="text-h6 mb-4">Бронювання</p>
+            </div>
 
-        <div class="mb-4">
-            <p class="text-h5 mb-4">Бронювання</p>
-        </div>
+            <div>
+                <v-text-field
+                    v-model="name"
+                    label="Для кого:"
+                    :rules="nameRules"
+                    required
+                >
+                </v-text-field>
+            </div>
 
-        <div>
-            <v-text-field
-                v-model="name"
-                label="Для кого:"
-                :rules="nameRules"
-                required
-            >
-            </v-text-field>
-        </div>
+            <div>
+                <v-text-field
+                    v-model="guests"
+                    :rules="guestsRules"
+                    label="На скількох:"
+                    style="text-align: center"
+                    class="centered-input input-number"
+                    type="number"
+                    ref="guestsField"
+                    :hide-spin-buttons="true"
+                >
+                    <template v-slot:prepend>
+                        <v-btn
+                            type="button"
+                            icon="mdi-minus"
+                            @click="minusGuests"
+                            @blur="$refs.guestsField.validate()"
+                        ></v-btn>
+                    </template>
+                    <template v-slot:append>
+                        <v-btn
+                            type="button"
+                            icon="mdi-plus"
+                            @click="plusGuests"
+                            @blur="$refs.guestsField.validate()"
+                        ></v-btn>
+                    </template>
+                </v-text-field>
+            </div>
 
-        <div>
-            <v-text-field
-                v-model="guests"
-                :rules="guestsRules"
-                label="На скількох:"
-                style="text-align: center"
-                class="centered-input input-number"
-                type="number"
-                ref="guestsField"
-                :hide-spin-buttons="true"
-            >
-                <template v-slot:prepend>
+            <div class="mb-4">
+                <p class="text-body-2 mb-2">На коли:</p>
+                <v-btn-toggle v-model="toggle_exclusive">
                     <v-btn
-                        type="button"
-                        icon="mdi-minus"
-                        @click="minusGuests"
-                        @blur="$refs.guestsField.validate()"
-                    ></v-btn>
-                </template>
-                <template v-slot:append>
-                    <v-btn
-                        type="button"
-                        icon="mdi-plus"
-                        @click="plusGuests"
-                        @blur="$refs.guestsField.validate()"
-                    ></v-btn>
-                </template>
-            </v-text-field>
-        </div>
+                        v-for="(item, index) in matchTimeOptions"
+                        :key="`${index}-${item}-place`"
+                        :color="time === item ? 'primary' : undefined"
+                        variant="outlined"
+                        @click="updateTime(item)"
+                    >
+                        {{ item }}
+                    </v-btn>
+                </v-btn-toggle>
+            </div>
 
-        <div class="mb-4">
-            <p class="text-body-2 mb-2">На коли:</p>
-            <v-btn
-                v-for="(item, index) in matchTimeOptions"
-                :key="`${index}-${item}-place`"
-                class="ma-2"
-                rounded
-                :color="time === item ? 'primary' : undefined"
-                @click="updateTime(item)"
-            >
-                {{ item }}
-            </v-btn>
-        </div>
+            <div class="mb-4">
+                <p class="text-body-2 mb-2">Побажання по розміщенню:</p>
+                <v-btn
+                    v-for="(item, index) in places"
+                    :key="`${index}-${item.value}-place`"
+                    class="ma-2"
+                    rounded
+                    :color="place === item.value ? 'primary' : undefined"
+                    @click="updatePlace(item.value)"
+                >
+                    {{ item.titleUa }}
+                </v-btn>
+            </div>
 
-        <div class="mb-4">
-            <p class="text-body-2 mb-2">Побажання по розміщенню:</p>
-            <v-btn
-                v-for="(item, index) in places"
-                :key="`${index}-${item.value}-place`"
-                class="ma-2"
-                rounded
-                :color="place === item.value ? 'primary' : undefined"
-                @click="updatePlace(item.value)"
-            >
-                {{ item.titleUa }}
-            </v-btn>
-        </div>
+            <div class="mb-4">
+                <p
+                    v-if="topMatch"
+                    class="text-caption"
+                >
+                    * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
+                </p>
+            </div>
 
-        <div class="mb-4">
-            <p
-                v-if="topMatch"
-                class="text-caption"
-            >
-                * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
-            </p>
-        </div>
-
-        <v-btn type="submit" block class="mt-2">Submit</v-btn>
+            <v-btn type="submit" block class="mt-2">Submit</v-btn>
+        </v-card-item>
     </v-form>
 </template>
 

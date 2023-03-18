@@ -1,26 +1,24 @@
 <template>
-    <v-divider class="mb-4"></v-divider>
-    <div class="header-container">
-        <div class="team">
-            <img
-                :src="homeTeamLogo"
-                alt=""
-                class="team-logo mb-4"
-            >
-            <p class="text-h5">{{ homeTeam }}</p>
+    <div class="header-container pa-4">
+        <img
+            :src="homeTeamLogo"
+            alt=""
+            class="team-logo"
+        >
+        <div class="match-name-container px-2">
+            <h4>4 березня, 17:00</h4>
+            <div class="match-name">
+              <p class="text-h6">{{ homeTeam }}</p>
+              <p class="text-h6">{{ awayTeam }}</p>
+            </div>
         </div>
-        <h4>{{ matchDate }}</h4>
-        <div class="team">
-            <img
-                :src="awayTeamLogo"
-                alt=""
-                class="team-logo mb-4"
-            >
-            <p class="text-h5">{{ awayTeam }}</p>
-        </div>
+        <img
+            :src="awayTeamLogo"
+            alt=""
+            class="team-logo"
+        >
     </div>
-    <!--        <div class="header-title">-->
-    <v-divider class="my-4"></v-divider>
+    <v-divider></v-divider>
 </template>
 
 <script>
@@ -66,17 +64,20 @@ export default {
 
 <style scoped>
 .header-container {
+    background-image: url("../assets/background.png");
+    background-repeat: repeat;
     display: flex;
     justify-content: space-between;
 }
-.team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+.match-name-container {
+  width: 100%;
+}
+.match-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .team-logo {
-    max-height: var(--spacing-xxxl);
-    margin-bottom: var(--spacing-m);
+    max-height: 60px;
 }
 </style>

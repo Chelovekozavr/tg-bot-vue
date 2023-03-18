@@ -7,9 +7,10 @@ import { createVuetify } from 'vuetify'
 
 const customTheme = {
     dark: false,
+    fontFamily: 'Sofia Sans Condensed',
     colors: {
-        background: '#121212',
-        surface: '#212121',
+        background: '#173b61',
+        surface: '#0b2744',
         primary: '#0C99E3',
     }
 }
