@@ -1,21 +1,19 @@
 <template>
-        <v-main v-show="!isLoading">
-            <v-card
-                class="mx-auto mt-4 pa-4"
-                max-width="450"
-            >
-                <v-cart-item>
-                    <router-view
-                        :home-team-logo="homeTeamLogo"
-                        :away-team-logo="awayTeamLogo"
-                        :name-rules="nameRules"
-                        :guests-rules="guestsRules"
-                        :match-time-options="matchTimeOptions"
-                        @on-submit="onSubmit"
-                    ></router-view>
-                </v-cart-item>
-            </v-card>
-        </v-main>
+    <v-main v-show="!isLoading">
+        <v-card
+            class="mx-auto mt-4"
+            max-width="450"
+        >
+            <router-view
+                :home-team-logo="homeTeamLogo"
+                :away-team-logo="awayTeamLogo"
+                :name-rules="nameRules"
+                :guests-rules="guestsRules"
+                :match-time-options="matchTimeOptions"
+                @on-submit="onSubmit"
+            ></router-view>
+        </v-card>
+    </v-main>
 </template>
 
 <script>
