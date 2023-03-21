@@ -1,14 +1,16 @@
 <template>
     <v-main v-show="!isLoading">
         <v-card
-            class="mx-auto mt-4"
+            class="mx-auto"
             max-width="450"
         >
             <router-view
                 :home-team-logo="homeTeamLogo"
                 :away-team-logo="awayTeamLogo"
                 :name-rules="nameRules"
+                :phone-rules="phoneRules"
                 :guests-rules="guestsRules"
+                :agreement-rules="agreementRules"
                 :match-time-options="matchTimeOptions"
                 @on-submit="onSubmit"
             ></router-view>
@@ -69,8 +71,26 @@ export default {
                     return true;
                 }
 
-                return 'Максимальне значення — 20';
+                return 'Не більше 20';
             }
+        ]);
+        const phoneRules = reactive( [
+            value => {
+                if (!value || +value.length < 14) {
+                    return 'Недопустиме значення';
+                }
+
+                return true;
+            },
+        ]);
+        const agreementRules = reactive( [
+            value => {
+                if (!value) {
+                    return `Обов'язкове поле`;
+                }
+
+                return true;
+            },
         ]);
 
         const matchTimeOptions = computed(() => {
@@ -142,7 +162,9 @@ export default {
             homeTeamLogo,
             awayTeamLogo,
             nameRules,
+            phoneRules,
             guestsRules,
+            agreementRules,
             matchTimeOptions,
             onSubmit,
         }

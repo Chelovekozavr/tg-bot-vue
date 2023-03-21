@@ -6,10 +6,10 @@
             class="team-logo"
         >
         <div class="match-name-container px-2">
-            <h4>4 березня, 17:00</h4>
+            <h4>{{ matchDate }}</h4>
             <div class="match-name">
-              <p class="text-h6">{{ homeTeam }}</p>
-              <p class="text-h6">{{ awayTeam }}</p>
+              <h2>{{ homeTeam }}</h2>
+              <h2>{{ awayTeam }}</h2>
             </div>
         </div>
         <img
@@ -62,22 +62,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.header-container {
-    background-image: url("../assets/background.png");
-    background-repeat: repeat;
-    display: flex;
-    justify-content: space-between;
-}
-.match-name-container {
-  width: 100%;
-}
-.match-name {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.team-logo {
-    max-height: 60px;
-}
+<style lang="scss">
+
 </style>

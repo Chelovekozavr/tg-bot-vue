@@ -1,91 +1,57 @@
 <template>
-    <v-form @submit.prevent="onSubmit" ref="form" lazy-validation>
+    <v-form
+        @submit.prevent="onSubmit"
+        validate-on="submit"
+        ref="form"
+    >
         <FormHeader
             :home-team-logo="homeTeamLogo"
             :away-team-logo="awayTeamLogo"
         >
         </FormHeader>
+
         <v-card-item>
             <div class="mb-4">
-                <p class="text-h6 mb-4">Бронювання</p>
+                <h2 class="mb-4">Бронювання</h2>
             </div>
 
-            <div>
-                <v-text-field
-                    v-model="name"
-                    label="Для кого:"
-                    :rules="nameRules"
-                    required
+            <form-guests-number-input
+                v-model="guests"
+                :modelValue="guests"
+                :guests-rules="guestsRules"
+            >
+            </form-guests-number-input>
+
+            <form-person-input
+                :modelValue:phone="phone"
+                :modelValue:name="name"
+                :name-rules="nameRules"
+                :phone-rules="phoneRules"
+                @update:modelValue:phone="phone = $event"
+                @update:modelValue:name="name = $event"
+            >
+            </form-person-input>
+
+            <form-time-input
+                :modelValue="time"
+                @update:modelValue="time = $event"
+                :match-time-options="matchTimeOptions"
+            >
+            </form-time-input>
+
+            <form-place-input
+                v-model="place"
+                :modelValue="place"
+            >
+            </form-place-input>
+
+            <div class="mb-4 d-flex" v-if="topMatch">
+                <v-checkbox
+                    v-model="agreement"
+                    label="Я розумію, що ця гра - матч підвищеного інтересу, і моя бронь буде анульована за 15 хвилин до стартового свистка, якщо я не повідомлю про запізнення!"
+                    :rules="agreementRules"
                 >
-                </v-text-field>
-            </div>
-
-            <div>
-                <v-text-field
-                    v-model="guests"
-                    :rules="guestsRules"
-                    label="На скількох:"
-                    style="text-align: center"
-                    class="centered-input input-number"
-                    type="number"
-                    ref="guestsField"
-                    :hide-spin-buttons="true"
-                >
-                    <template v-slot:prepend>
-                        <v-btn
-                            type="button"
-                            icon="mdi-minus"
-                            @click="minusGuests"
-                            @blur="$refs.guestsField.validate()"
-                        ></v-btn>
-                    </template>
-                    <template v-slot:append>
-                        <v-btn
-                            type="button"
-                            icon="mdi-plus"
-                            @click="plusGuests"
-                            @blur="$refs.guestsField.validate()"
-                        ></v-btn>
-                    </template>
-                </v-text-field>
-            </div>
-
-            <div class="mb-4">
-                <p class="text-body-2 mb-2">На коли:</p>
-                <v-btn-toggle v-model="toggle_exclusive">
-                    <v-btn
-                        v-for="(item, index) in matchTimeOptions"
-                        :key="`${index}-${item}-place`"
-                        :color="time === item ? 'primary' : undefined"
-                        variant="outlined"
-                        @click="updateTime(item)"
-                    >
-                        {{ item }}
-                    </v-btn>
-                </v-btn-toggle>
-            </div>
-
-            <div class="mb-4">
-                <p class="text-body-2 mb-2">Побажання по розміщенню:</p>
-                <v-btn
-                    v-for="(item, index) in places"
-                    :key="`${index}-${item.value}-place`"
-                    class="ma-2"
-                    rounded
-                    :color="place === item.value ? 'primary' : undefined"
-                    @click="updatePlace(item.value)"
-                >
-                    {{ item.titleUa }}
-                </v-btn>
-            </div>
-
-            <div class="mb-4">
-                <p
-                    v-if="topMatch"
-                    class="text-caption"
-                >
-                    * подія підвищеного інтересу. Будь ласка, приходьте заздалегідь. Всі бронвання згорають за 15 хвилин до гри
-                </p>
+                </v-checkbox>
             </div>
 
             <v-btn type="submit" block class="mt-2">Submit</v-btn>
@@ -95,19 +61,28 @@
 
 <script>
 import { ref } from 'vue';
-import { places } from '../helpers/placeEnum';
 import { getUrlParam } from '../helpers/getUrlParams';
 import FormHeader from "./FormHeader";
+import FormPlaceInput from "./FormPlaceInput";
+import FormGuestsNumberInput from "./FormGuestsNumberInput";
+import FormPersonInput from "./FormPersonInput";
+import FormTimeInput from "./FormTimeInput";
 
 export default {
     name: "FormMatchday",
     components: {
-        FormHeader
+        FormTimeInput,
+        FormPersonInput,
+        FormGuestsNumberInput,
+        FormHeader,
+        FormPlaceInput,
     },
     props: {
         prop: Number,
         guestsRules: Array,
         nameRules: Array,
+        phoneRules: Array,
+        agreementRules: Array,
         homeTeamLogo: String,
         awayTeamLogo: String,
         matchTimeOptions: Array,
@@ -117,13 +92,16 @@ export default {
         // form
         const form = ref(null);
         const topMatch = getUrlParam('topMatch');
-        let time = ref(props.matchTimeOptions[0]);
-        let guests = ref(1);
-        let place = ref(1);
+        let time = ref(props.matchTimeOptions[1]);
+        let guests = ref(2);
+        let place = ref('');
         let name = ref('Kaligula');
+        let phone = ref('');
+        let forFriend = ref(false);
+        let agreement = ref(false);
 
-        if(window.Telegram?.WebApp?.initDataUnsafe) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula';
+        if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
         }
 
         //onChange
@@ -146,22 +124,24 @@ export default {
         function updateTime(e) {
             time.value = e;
         }
-        function updatePlace(e) {
-            place.value = e;
-        }
 
         //submit
         async function onSubmit() {
             let valid = await form.value.validate();
 
+            console.log(!valid.valid)
             if(!valid.valid) {
+                setTimeout(() => {
+
+                    form.value.resetValidation();
+                }, 3000)
                 return;
             }
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
-                place: places.find(item => item.value === place.value).value,
+                place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: getUrlParam('date'),
             }
@@ -173,12 +153,13 @@ export default {
             form,
             time,
             name,
+            phone,
             guests,
             place,
+            agreement,
             topMatch,
-            places,
+            forFriend,
             updateTime,
-            updatePlace,
             updateGuests,
             minusGuests,
             plusGuests,
