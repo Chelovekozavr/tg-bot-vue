@@ -155,9 +155,6 @@ export default {
             isLoading.value = false;
         });
 
-        window.Telegram?.WebApp?.MainButton?.show();
-        window.Telegram?.WebApp?.MainButton?.onClick(onSubmit);
-
         return {
             isLoading,
             homeTeamLogo,

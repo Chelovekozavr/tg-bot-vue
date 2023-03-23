@@ -4,48 +4,19 @@
         validate-on="submit"
         ref="form"
     >
-        <v-time-picker></v-time-picker>
-        <div class="xxx pa-6">
-<v-label>Бронювання на 4 березня</v-label>
-            <v-divider></v-divider>
-            <v-btn v-for="item in 14" :disabled="item < 4" :key="item" class="mt-4 my-4">
-                {{ `${item}` }}
-            </v-btn>
-        </div>
         <v-card-item>
-            <v-divider class="mb-4"></v-divider>
-
-            <div class="mb-4">
-                <p class="text-h5 mb-4">Бронювання</p>
-            </div>
-
+            <h1>Бронювання на {{ date.toLocaleString('uk-UA', { weekday: 'short', month: 'long', day: 'numeric'}) }}</h1>
+            <form-date-input
+                v-model:selected-date="date"
+            >
+            </form-date-input>
             <v-divider class="my-4"></v-divider>
-
-            <div class="d-flex flex-row flex-gap justify-space-between align-start mb-4">
-                <v-label>Бронюю на</v-label>
-                <div class="d-flex">
-                    <date-picker
-                        v-model:value="date"
-                        placeholder="Оберіть дату"
-                        :disabled-date="(date) => date < new Date() || date > new Date().setDate(new Date().getDate() + 30)"
-                        default-panel="day"
-                        format="MM-DD-YYYY"
-                        class="mr-2"
-                        :clearable="false"
-                    >
-                        <template v-slot:icon-calendar>
-                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"/></svg>
-                        </template>
-                    </date-picker>
-                    <v-select
-                        v-model="time"
-                        :items="timeOptions"
-                    >
-
-                    </v-select>
-                </div>
-            </div>
-
+            <form-time-picker-input
+                :today-selected="todaySelected"
+                :key="date"
+                v-model:selected-time="time"
+            >
+            </form-time-picker-input>
             <form-person-input
                 :modelValue:phone="phone"
                 :modelValue:name="name"
@@ -55,7 +26,6 @@
                 @update:modelValue:name="name = $event"
             >
             </form-person-input>
-
             <form-guests-number-input
                 v-model="guests"
                 :modelValue="guests"
@@ -69,7 +39,14 @@
             >
             </form-place-input>
 
-            <v-btn type="submit" block class="mt-2">Submit</v-btn>
+            <v-btn
+                type="submit"
+                block
+                class="mt-2"
+                color="primary"
+            >
+                Забронювати
+            </v-btn>
         </v-card-item>
     </v-form>
 </template>
@@ -77,20 +54,22 @@
 <script>
 import { ref, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
-import DatePicker from 'vue-datepicker-next';
 import 'vue-datepicker-next/index.css';
 import 'vue-datepicker-next/locale/uk';
 import FormPersonInput from "./FormPersonInput";
 import FormPlaceInput from "./FormPlaceInput";
+import FormDateInput from "./FormDateInput"
 import FormGuestsNumberInput from "./FormGuestsNumberInput";
+import FormTimePickerInput from './FormTimePickerInput'
 
 export default {
     name: "FormMatchday",
     components: {
-        DatePicker,
         FormPersonInput,
         FormGuestsNumberInput,
-        FormPlaceInput
+        FormPlaceInput,
+        FormDateInput,
+        FormTimePickerInput,
     },
     props: {
         guestsRules: Array,
@@ -99,52 +78,23 @@ export default {
     },
     emits: ['onSubmit'],
     setup(props, context) {
-        const openingTime = '10:00';
-        const closingTime = '22:00';
-
         //form
         let phone = ref('');
         const form = ref(null);
         let date = ref(new Date());
-        let guests = ref(1);
+        let guests = ref(2);
         let place = ref(1);
         let name = ref('Kaligula');
-        let time = ref(openingTime);
+
+        const hoursNow = ref(new Date().getHours());
+        let todaySelected = computed(() => {
+            return date.value.getDate() === new Date().getDate();
+        });
+        let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
             name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula';
         }
-
-        //options
-        const timeOptions = computed(() => {
-            const workingEndTime = new Date().setHours(+closingTime.split(':')[0], +closingTime.split(':')[1]);
-            const timeGap = 30;
-            let res = [{
-                title: openingTime,
-                value: openingTime,
-            }];
-
-            function getOptions(opt = openingTime) {
-                let date = new Date().setHours(+opt.split(':')[0], +opt.split(':')[1], 0, 0);
-                let datePlusGap = date + timeGap * 60000;
-
-                if(workingEndTime > datePlusGap) {
-                    let option = new Date(datePlusGap).toLocaleTimeString('UA-uk', {hour: '2-digit', minute:'2-digit'});
-                    res.push(
-                        {
-                            title: option,
-                            value: option,
-                        }
-                    );
-
-                    getOptions(option);
-                }
-            }
-
-            getOptions();
-
-            return res;
-        });
 
         // submit
         async function onSubmit() {
@@ -178,12 +128,12 @@ export default {
             form,
             date,
             time,
-            timeOptions,
             name,
             guests,
             place,
             phone,
             places,
+            todaySelected,
             onSubmit
         }
     }

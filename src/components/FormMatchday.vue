@@ -54,8 +54,14 @@
                 </v-checkbox>
             </div>
 
-            <v-btn type="submit" block class="mt-2">Submit</v-btn>
-        </v-card-item>
+            <v-btn
+                type="submit"
+                block
+                class="mt-2"
+                color="primary"
+            >
+                Забронювати
+            </v-btn>        </v-card-item>
     </v-form>
 </template>
 
