@@ -116,18 +116,18 @@ export default {
                 }, 3000)
                 return;
             }
-            const dateWithoutTime = date.value.setHours(0,0,0,0);
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
                 place: places.find(item => item.value === place.value).value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: new Date(dateWithoutTime),
+                date: date.value,
             }
 
             context.emit('onSubmit', data);
             window.Telegram.WebApp.close();
+
         }
 
         return {

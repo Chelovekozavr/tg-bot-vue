@@ -149,7 +149,7 @@ export default {
             }
 
             const dateArray = getUrlParam('date').split('.');
-            const dateObj = new Date(dateArray[2], dateArray[1], dateArray[0], 0, 0, 0, 0);
+            const dateObj = new Date(dateArray[2], dateArray[1], dateArray[0]);
 
             const data = {
                 name: name.value,
