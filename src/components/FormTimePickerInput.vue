@@ -124,7 +124,7 @@ export default {
 
             if(hours <= hourOpening) {
                 return;
-            } else if(props.todaySelected +hours - 2 <= +new Date().getHours()) {
+            } else if(props.todaySelected && +hours - 2 <= +new Date().getHours()) {
 
                 return;
             } else {
