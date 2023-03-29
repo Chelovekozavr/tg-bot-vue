@@ -8,6 +8,7 @@
             density="compact"
             class="time-picker w-10 mr-6"
             :hide-spin-buttons="true"
+            type="string"
         >
             <template v-slot:prepend>
                 <div class="d-flex flex-column time-picker__up">
@@ -51,7 +52,7 @@
 </template>
 
 <script>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onMounted } from 'vue';
 import { vMaska } from "maska";
 
 export default {
@@ -60,7 +61,7 @@ export default {
         todaySelected: Boolean,
         parentTime: String,
     },
-    emits: ['update:selectedTime'],
+    emits: ['update:selectedTime', 'plus-day'],
     setup(props, context) {
         const hoursNow = ref(new Date().getHours());
         const timeOpening = ref('12:00');
@@ -70,7 +71,8 @@ export default {
         const options = reactive({
             mask: "##:##",
         });
-        let selectedTime = ref(props.todaySelected ? `${hoursNow.value + 1}:00` : '19:00');
+        let selectedTime = ref('19:00');
+
         function getDefaultEarlyTime() {
             const openingTimeArray = timeOpening.value.split(':');
 
@@ -141,7 +143,7 @@ export default {
                 if(minutes === 0) {
                     selectedTime.value = `${hours}:30`;
                 } else {
-                    selectedTime.value = `${hours + 1}:00`
+                    selectedTime.value = `${hours + 1}:00`;
                 }
             }
         }
@@ -161,7 +163,7 @@ export default {
                 if(minutes === 0) {
                     selectedTime.value = `${hours}:30`;
                 } else {
-                    selectedTime.value = `${hours - 1}:00`
+                    selectedTime.value = `${hours - 1}:00`;
                 }
             }
         }
@@ -206,6 +208,21 @@ export default {
 
         watch(selectedTime, () => {
             context.emit('update:selectedTime', selectedTime.value);
+        })
+
+        onMounted(() => {
+            if(props.todaySelected) {
+                const timeSelectedArray = selectedTime.value.split(':');
+                const timeClosingArray = timeClosing.value.split(':');
+                const timeSelectedDate = new Date().setHours(timeSelectedArray[0], timeSelectedArray[1]);
+                const closingDate = new Date().setHours(timeClosingArray[0], timeClosingArray[1]);
+
+                if(timeSelectedDate > closingDate) {
+                    context.emit('plus-day');
+                } else if(timeSelectedDate < new Date().getTime()) {
+                    selectedTime.value = `${hoursNow.value + 1}:00`;
+                }
+            }
         })
 
         return {

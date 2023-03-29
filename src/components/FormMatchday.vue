@@ -61,7 +61,8 @@
                 color="primary"
             >
                 Забронювати
-            </v-btn>        </v-card-item>
+            </v-btn>
+        </v-card-item>
     </v-form>
 </template>
 
@@ -133,26 +134,34 @@ export default {
 
         //submit
         async function onSubmit() {
+            console.log('onSubmit')
             let valid = await form.value.validate();
 
             console.log(!valid.valid)
             if(!valid.valid) {
+                console.log('invalid')
+
                 setTimeout(() => {
 
                     form.value.resetValidation();
                 }, 3000)
                 return;
             }
+
+            const dateArray = getUrlParam('date').split('.');
+            const dateObj = new Date(dateArray[2], dateArray[1], dateArray[0]);
+
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
                 place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: getUrlParam('date'),
+                date: dateObj,
             }
 
             context.emit('onSubmit', data);
+            window.Telegram.WebApp.close();
         }
 
         return {

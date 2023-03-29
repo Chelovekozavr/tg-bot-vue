@@ -15,6 +15,7 @@
                 :today-selected="todaySelected"
                 :key="date"
                 v-model:selected-time="time"
+                @plus-day="plusDay"
             >
             </form-time-picker-input>
             <form-person-input
@@ -97,6 +98,14 @@ export default {
         }
 
         // submit
+
+        function plusDay() {
+            let nextDay = new Date();
+
+            nextDay.setDate(nextDay.getDate() + 1);
+            date.value = nextDay;
+
+        }
         async function onSubmit() {
             let valid = await form.value.validate();
 
@@ -107,21 +116,18 @@ export default {
                 }, 3000)
                 return;
             }
-
+            console.log(date.value, typeof date.value)
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
                 place: places.find(item => item.value === place.value).value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: date.value.toLocaleString(['uk-UA'], {
-                    year: 'numeric',
-                    month:"2-digit",
-                    day:"2-digit",
-                }),
+                date: date.value,
             }
 
             context.emit('onSubmit', data);
+            window.Telegram.WebApp.close();
         }
 
         return {
@@ -134,6 +140,7 @@ export default {
             phone,
             places,
             todaySelected,
+            plusDay,
             onSubmit
         }
     }
