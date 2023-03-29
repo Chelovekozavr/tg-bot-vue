@@ -116,14 +116,14 @@ export default {
                 }, 3000)
                 return;
             }
-            console.log(date.value, typeof date.value)
+            const dateWithoutTime = date.value.setHours(0,0,0,0);
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
                 place: places.find(item => item.value === place.value).value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: date.value,
+                date: new Date(dateWithoutTime),
             }
 
             context.emit('onSubmit', data);
