@@ -122,7 +122,7 @@ export default {
                 guests: guests.value,
                 place: places.find(item => item.value === place.value).value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: date.value,
+                date: date.value.toISOString(),
             }
 
             context.emit('onSubmit', data);

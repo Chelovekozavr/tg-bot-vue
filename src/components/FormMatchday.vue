@@ -149,15 +149,15 @@ export default {
             }
 
             const dateArray = getUrlParam('date').split('.');
-            const dateObj = new Date(dateArray[2], dateArray[1], dateArray[0]);
-
+            const dateObj = new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
+            const isoDateTime = new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000)).toISOString();
             const data = {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
                 place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
-                date: dateObj,
+                date: isoDateTime,
             }
 
             context.emit('onSubmit', data);
