@@ -43,9 +43,10 @@ export default {
     props: {
         phoneRules: Array,
         nameRules: Array,
+        isAdmin: Boolean,
     },
     setup(props, context) {
-        let forFriend = ref(false);
+        let forFriend = ref(props.isAdmin);
         let phone = ref('');
         let name = ref('Kaligula');
         const options = reactive({
