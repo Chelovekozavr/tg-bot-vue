@@ -1,5 +1,6 @@
 <template>
     <v-main v-show="!isLoading">
+        {{ isAdmin }}
         <v-card
             class="mx-auto"
             max-width="450"
@@ -39,6 +40,7 @@ export default {
         // ?parsedDate=2023-04-01T14:00:00.000Z&time=17:00&date=01.04.2023&homeTeam=Львів&awayTeam=Динамо К.&topMatch=false&url=https://www.flashscore.ua/match/Augn9Hpr/
 
         let isLoading = ref(true);
+        let isAdmin = ref(getUrlParam('isAdmin'));
         let homeTeamLogo = ref('');
         let awayTeamLogo = ref('');
 
@@ -94,7 +96,7 @@ export default {
         ]);
 
         const matchTimeOptions = computed(() => {
-            const date = new Date(getUrlParam('parsedDate'))
+            const date = new Date(getUrlParam('parsedDate'));
             let tempDate = date;
             const topMatch = getUrlParam('topMatch');
             const msPerMinute = 60000;
@@ -157,6 +159,7 @@ export default {
 
         return {
             isLoading,
+            isAdmin,
             homeTeamLogo,
             awayTeamLogo,
             nameRules,
