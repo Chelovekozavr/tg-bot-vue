@@ -35,10 +35,23 @@
             </form-guests-number-input>
 
             <form-place-input
+                v-if="!isAdmin"
                 v-model="place"
                 :modelValue="place"
             >
             </form-place-input>
+
+            <div
+                v-else
+                class="d-flex flex-row flex-gap justify-space-between align-start mb-4"
+            >
+                <v-label class="w-33">Коментар</v-label>
+                <v-text-field
+                    v-model="adminComment"
+                    class="w-75"
+                >
+                </v-text-field>
+            </div>
 
             <v-btn
                 type="submit"
@@ -55,6 +68,7 @@
 <script>
 import { ref, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
+import { getUrlParam } from '../helpers/getUrlParams';
 import 'vue-datepicker-next/index.css';
 import 'vue-datepicker-next/locale/uk';
 import FormPersonInput from "./FormPersonInput";
@@ -82,10 +96,12 @@ export default {
         //form
         let phone = ref('');
         const form = ref(null);
+        let isAdmin = ref(getUrlParam('isAdmin') || false);
         let date = ref(new Date());
         let guests = ref(2);
         let place = ref(1);
         let name = ref('Kaligula');
+        let adminComment = ref('');
 
         const hoursNow = ref(new Date().getHours());
         let todaySelected = computed(() => {
@@ -140,6 +156,8 @@ export default {
             phone,
             places,
             todaySelected,
+            isAdmin,
+            adminComment,
             plusDay,
             onSubmit
         }

@@ -40,12 +40,25 @@
             </form-time-input>
 
             <form-place-input
+                v-if="!isAdmin"
                 v-model="place"
                 :modelValue="place"
             >
             </form-place-input>
 
-            <div class="mb-4 d-flex" v-if="topMatch">
+            <div
+                v-else
+                class="d-flex flex-row flex-gap justify-space-between align-start mb-4"
+            >
+                <v-label class="w-33">Коментар</v-label>
+                <v-text-field
+                    v-model="adminComment"
+                    class="w-75"
+                >
+                </v-text-field>
+            </div>
+
+            <div class="mb-4 d-flex" v-if="topMatch && !isAdmin">
                 <v-checkbox
                     v-model="agreement"
                     label="Я розумію, що ця гра - матч підвищеного інтересу, і моя бронь буде анульована за 15 хвилин до стартового свистка, якщо я не повідомлю про запізнення!"
@@ -99,12 +112,14 @@ export default {
         // form
         const form = ref(null);
         const topMatch = getUrlParam('topMatch');
+        let isAdmin = ref(getUrlParam('isAdmin') || false);
         let time = ref(props.matchTimeOptions[1]);
         let guests = ref(2);
         let place = ref('');
         let name = ref('Kaligula');
         let phone = ref('');
         let forFriend = ref(false);
+        let adminComment = ref('');
         let agreement = ref(false);
 
         if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
@@ -158,6 +173,7 @@ export default {
                 place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: isoDateTime,
+                adminComment: adminComment.value,
             }
 
             context.emit('onSubmit', data);
@@ -172,8 +188,10 @@ export default {
             guests,
             place,
             agreement,
+            adminComment,
             topMatch,
             forFriend,
+            isAdmin,
             updateTime,
             updateGuests,
             minusGuests,
