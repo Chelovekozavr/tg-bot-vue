@@ -1,10 +1,11 @@
 <template>
     <v-main v-show="!isLoading">
-        {{ isAdmin }}
         <v-card
             class="mx-auto"
             max-width="450"
         >
+            {{ isAdmin }}
+            {{ typeof isAdmin }}
             <router-view
                 :home-team-logo="homeTeamLogo"
                 :away-team-logo="awayTeamLogo"
@@ -40,7 +41,7 @@ export default {
         // ?parsedDate=2023-04-01T14:00:00.000Z&time=17:00&date=01.04.2023&homeTeam=Львів&awayTeam=Динамо К.&topMatch=false&url=https://www.flashscore.ua/match/Augn9Hpr/
 
         let isLoading = ref(true);
-        let isAdmin = ref(getUrlParam('isAdmin'));
+        let isAdmin = ref(getUrlParam('isAdmin') || false);
         let homeTeamLogo = ref('');
         let awayTeamLogo = ref('');
 
