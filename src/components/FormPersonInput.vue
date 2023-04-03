@@ -3,6 +3,8 @@
         <v-label>
             Стіл бронюю
         </v-label>
+
+
         <div v-if="!forFriend">
             <v-btn
                 class="ma-2"

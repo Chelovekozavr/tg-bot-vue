@@ -19,8 +19,6 @@
             >
             </form-time-picker-input>
 
-            {{ typeof isAdmin }}
-            {{ isAdmin }}
             <form-person-input
                 :modelValue:phone="phone"
                 :modelValue:name="name"
