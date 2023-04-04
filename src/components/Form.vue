@@ -125,12 +125,17 @@ export default {
         });
 
 
-        async function onSubmit(data) {
+        async function onSubmit(data, onEdit = false) {
             console.log(data)
-            window.Telegram.WebApp.sendData(JSON.stringify(data));
+
             async function sendData() {
                 try {
-                    const result = await axios.post('http://localhost:8085/reserve', { ...data });
+                    let result;
+                    if(onEdit) {
+                        result = await axios.post('http://localhost:8085/reserve', { ...data });
+                    } else {
+                        result = await axios.post('http://localhost:8085/editReserve', { ...data });
+                    }
                     console.log(result.data);
                     return result.data;
                 } catch(e) {

@@ -46,7 +46,7 @@ export default {
     name: "FormPlaceInput",
     props: {
         disabled: Boolean,
-        modelValue: String
+        modelValue: [Number, String]
     },
     emits: ['update:modelValue'],
     setup(props, context) {

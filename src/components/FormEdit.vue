@@ -39,7 +39,8 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-
+            {{ typeof place }}
+            {{  place }}
             <form-place-input
                 v-model="place"
                 :disabled="isAdmin"
@@ -101,7 +102,6 @@ export default {
         //form
 
         let loading = ref(true);
-        const id = getUrlParam('id');
         let phone = ref('');
         const form = ref(null);
         let isAdmin = ref(getUrlParam('isAdmin') || false);
@@ -140,7 +140,6 @@ export default {
                 return;
             }
             const data = {
-                id,
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
@@ -156,6 +155,7 @@ export default {
 
         onMounted(async() => {
             loading.value = true;
+            const id = getUrlParam('id') || '642c914e12db2eecf80b1f1e';
 
             try {
                 const result = await axios.post('http://localhost:8085/getReserve/', { id });
