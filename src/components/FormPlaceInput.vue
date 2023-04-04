@@ -7,6 +7,7 @@
                 :key="`${index}-${item.value}-place`"
                 class="ma-2"
                 style="padding: 0 8px"
+                :disabled="disabled"
                 @click="updatePlace(item)"
             >
                 {{ item.title }}
@@ -18,9 +19,11 @@
                 v-model="placeComment"
                 @input="updatePlaceComment"
                 class="w-100"
+                :disabled="disabled"
             >
                 <div v-if="chips.length">
                     <v-chip
+                        :disabled="disabled"
                         v-for="(item, index) in chips"
                         :key="`${item}-${index}-chip`"
                         closable
@@ -41,6 +44,9 @@ import { places } from '../helpers/placeEnum';
 import { ref } from 'vue';
 export default {
     name: "FormPlaceInput",
+    props: {
+        disabled: Boolean
+    },
     emits: ['update:modelValue'],
     setup(props, context) {
         let placeComment = ref('');

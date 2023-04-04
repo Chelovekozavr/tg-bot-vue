@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import FormMatchday from '../components/FormMatchday';
 import FormNotMatchday from '../components/FormNotMatchday';
+import FormEdit from '../components/FormEdit';
 import Form from '../components/Form';
 
 const routes = [
@@ -28,6 +29,15 @@ const routes = [
         props: true,
         components: {
             default:  FormNotMatchday,
+            'wrapper': Form,
+        }
+    },
+    {
+        path: '/edit',
+        name: 'NotMatchDay',
+        props: true,
+        components: {
+            default:  FormEdit,
             'wrapper': Form,
         }
     },

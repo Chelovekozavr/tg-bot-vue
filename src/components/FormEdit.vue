@@ -5,6 +5,8 @@
         ref="form"
     >
         <v-card-item>
+            <h1>edit</h1>
+            <h2>{{ isAdmin }}</h2>
             <h1>Бронювання на {{ date.toLocaleString('uk-UA', { weekday: 'short', month: 'long', day: 'numeric'}) }}</h1>
             <form-date-input
                 v-model:selected-date="date"
@@ -37,14 +39,13 @@
             </form-guests-number-input>
 
             <form-place-input
-                v-if="!isAdmin"
                 v-model="place"
+                :disabled="isAdmin"
                 :modelValue="place"
             >
             </form-place-input>
 
             <div
-                v-else
                 class="d-flex flex-row flex-gap justify-space-between align-start mb-4"
             >
                 <v-label class="w-33">Коментар</v-label>
@@ -68,9 +69,10 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { places } from '../helpers/placeEnum';
 import { getUrlParam } from '../helpers/getUrlParams';
+import axios from "axios";
 import FormPersonInput from "./FormPersonInput";
 import FormPlaceInput from "./FormPlaceInput";
 import FormDateInput from "./FormDateInput"
@@ -92,11 +94,22 @@ export default {
         phoneRules: Array,
     },
     emits: ['onSubmit'],
+
     setup(props, context) {
+        onMounted(async() => {
+            // const id = getUrlParam('id');
+            const id = '642b08a60ce9eaa9088ccb23';
+            await axios.post('http://localhost:8085/getReserve', { id }).then((response) => {
+                console.log(response.data);
+                return response.data;
+            }).catch((err) => {
+                console.log(err)
+            })
+        })
         //form
         let phone = ref('');
         const form = ref(null);
-        let isAdmin = ref(getUrlParam('isAdmin') || false);
+        let isAdmin = ref(getUrlParam('isAdmin') || true);
         let date = ref(new Date());
         let guests = ref(2);
         let place = ref(1);
