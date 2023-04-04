@@ -34,7 +34,7 @@ const routes = [
     },
     {
         path: '/edit',
-        name: 'NotMatchDay',
+        name: 'Edit',
         props: true,
         components: {
             default:  FormEdit,
