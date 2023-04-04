@@ -35,7 +35,7 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-
+            {{ place }}
             <form-place-input
                 v-if="!isAdmin"
                 v-model="place"
@@ -99,7 +99,7 @@ export default {
         let isAdmin = ref(getUrlParam('isAdmin') || false);
         let date = ref(new Date());
         let guests = ref(2);
-        let place = ref(1);
+        let place = ref('');
         let name = ref('Kaligula');
         let adminComment = ref('');
 

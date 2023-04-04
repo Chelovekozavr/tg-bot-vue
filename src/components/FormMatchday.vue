@@ -39,7 +39,7 @@
                 :match-time-options="matchTimeOptions"
             >
             </form-time-input>
-
+            {{ place }}
             <form-place-input
                 v-if="!isAdmin"
                 v-model="place"

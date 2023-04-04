@@ -71,9 +71,10 @@ export default {
         }
 
         function emit() {
-            const placesString = chips.value.map(function(item) {
+            const placesString = chips.value.map((item) => {
                 return item['title'];
             });
+            console.log(`${placesString} ${placeComment.value}`)
             context.emit('update:modelValue', `${placesString} ${placeComment.value}`);
         }
 
