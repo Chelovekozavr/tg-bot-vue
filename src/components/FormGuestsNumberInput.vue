@@ -3,6 +3,7 @@
         <v-label class="text-wrap mr-20 w-50">
             Бронюю стіл на кількість місць
         </v-label>
+
         <v-text-field
             v-model="guests"
             :rules="guestsRules"
@@ -46,9 +47,11 @@ export default {
     emits: ['update:modelValue'],
     props: {
         guestsRules: Array,
+        modelValue: Number,
     },
     setup(props, context) {
-        let guests = ref(2);
+        console.log(props.modelValue)
+        let guests = ref(props.modelValue);
         function minusGuests() {
             if(guests.value <=1) {
                 return;
@@ -69,7 +72,7 @@ export default {
             emit();
         }
         function emit() {
-            context.emit('update:modelValue', guests.value);
+            context.emit('update:modelValue', +guests.value);
         }
 
         return {

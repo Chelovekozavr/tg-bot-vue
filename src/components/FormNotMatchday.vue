@@ -11,6 +11,7 @@
             >
             </form-date-input>
             <v-divider class="my-4"></v-divider>
+
             <form-time-picker-input
                 :today-selected="todaySelected"
                 :key="date"
@@ -102,11 +103,12 @@ export default {
         let name = ref('Kaligula');
         let adminComment = ref('');
 
-        const hoursNow = ref(new Date().getHours());
+        // const hoursNow = ref(new Date().getHours());
         let todaySelected = computed(() => {
             return date.value.getDate() === new Date().getDate();
         });
-        let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
+        // let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
+        let time = ref('19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
             name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula';

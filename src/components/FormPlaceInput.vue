@@ -45,11 +45,12 @@ import { ref } from 'vue';
 export default {
     name: "FormPlaceInput",
     props: {
-        disabled: Boolean
+        disabled: Boolean,
+        modelValue: String
     },
     emits: ['update:modelValue'],
     setup(props, context) {
-        let placeComment = ref('');
+        let placeComment = ref(props.modelValue || '');
         let chips = ref([]);
         let placeOptions = ref(places);
 
@@ -74,7 +75,6 @@ export default {
             const placesString = chips.value.map((item) => {
                 return item['title'];
             });
-            console.log(`${placesString} ${placeComment.value}`)
             context.emit('update:modelValue', `${placesString} ${placeComment.value}`);
         }
 

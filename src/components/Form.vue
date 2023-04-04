@@ -129,14 +129,13 @@ export default {
             console.log(data)
             window.Telegram.WebApp.sendData(JSON.stringify(data));
             async function sendData() {
-                await axios.post('http://localhost:8085/reserve', {
-                    ...data
-                }).then((response) => {
-                    console.log(response.data)
-                    return response.data.done
-                }).catch((err) => {
-                    console.log(err)
-                })
+                try {
+                    const result = await axios.post('http://localhost:8085/reserve', { ...data });
+                    console.log(result.data);
+                    return result.data;
+                } catch(e) {
+                    console.log(e)
+                }
             }
 
             await sendData();

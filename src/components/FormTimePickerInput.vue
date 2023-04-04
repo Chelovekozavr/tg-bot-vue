@@ -1,6 +1,7 @@
 <template>
     <div class="d-flex flex-row flex-gap justify-space-between align-start mb-6">
         <v-label class="mb-2 mr-10 w-50">Плануємо бути о</v-label>
+
         <v-text-field
             v-model="selectedTime"
             @blur="updateTime($event.target.value)"
@@ -60,6 +61,7 @@ export default {
     props: {
         todaySelected: Boolean,
         parentTime: String,
+        modelValue: String,
     },
     emits: ['update:selectedTime', 'plus-day'],
     setup(props, context) {
@@ -71,7 +73,7 @@ export default {
         const options = reactive({
             mask: "##:##",
         });
-        let selectedTime = ref('19:00');
+        let selectedTime = ref(props.modelValue || '19:00');
 
         function getDefaultEarlyTime() {
             const openingTimeArray = timeOpening.value.split(':');
@@ -223,6 +225,8 @@ export default {
                     selectedTime.value = `${hoursNow.value + 1}:00`;
                 }
             }
+
+            context.emit('update:selectedTime', selectedTime.value);
         })
 
         return {

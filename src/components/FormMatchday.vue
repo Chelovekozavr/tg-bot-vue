@@ -23,13 +23,13 @@
             </form-guests-number-input>
 
             <form-person-input
-                :modelValue:phone="phone"
-                :modelValue:name="name"
+                :phone-model-value:="phone"
+                :name-model-value:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
                 :is-admin="isAdmin"
-                @update:modelValue:phone="phone = $event"
-                @update:modelValue:name="name = $event"
+                @update:phoneModelValue="phone = $event"
+                @update:nameModelValue="name = $event"
             >
             </form-person-input>
 

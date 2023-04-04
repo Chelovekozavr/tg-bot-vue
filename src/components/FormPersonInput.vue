@@ -3,12 +3,11 @@
         <v-label>
             Стіл бронюю
         </v-label>
-
-
         <div v-if="!forFriend">
             <v-btn
                 class="ma-2"
-                :color="'primary'"
+                :color="'p' +
+                 'rimary'"
             >
                 Для себе ({{ `@${name}` }})
             </v-btn>
@@ -46,26 +45,35 @@ export default {
         phoneRules: Array,
         nameRules: Array,
         isAdmin: Boolean,
+        phoneModelValue: String,
+        nameModelValue: String,
+        onEdit: {
+            type: Boolean,
+            default: false
+        }
     },
     setup(props, context) {
         let forFriend = ref(props.isAdmin);
-        let phone = ref('');
-        let name = ref('Kaligula');
+        let phone = ref(props.phoneModelValue || '');
+        let name = ref(props.nameModelValue || 'Kaligula');
+
         const options = reactive({
             mask: "(###)###-##-##",
         })
 
+        console.log(props.onEdit)
 
-        if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
+        if(!props.onEdit && window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
+
+            console.log('onIf')
             name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
         }
 
-
         function updateName() {
-            context.emit('update:modelValue:name', name.value);
+            context.emit('update:nameModelValue', name.value);
         }
         function updatePhone() {
-            context.emit('update:modelValue:phone', phone.value);
+            context.emit('update:phoneModelValue', phone.value);
         }
 
         return {
