@@ -149,7 +149,7 @@ export default {
                 adminComment: adminComment.value,
             }
 
-            context.emit('onSubmit', data);
+            context.emit('onSubmit', data, true);
             window.Telegram.WebApp.close();
         }
 
@@ -158,7 +158,7 @@ export default {
             const id = getUrlParam('id') || '642c914e12db2eecf80b1f1e';
 
             try {
-                const result = await axios.post('http://localhost:8085/getReserve/', { id });
+                const result = await axios.post('http://localhost:8085/getReserve', { id });
 
                 console.log(result.data);
                 date.value = new Date(result.data.date);

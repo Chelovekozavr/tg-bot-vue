@@ -126,16 +126,14 @@ export default {
 
 
         async function onSubmit(data, onEdit = false) {
-            console.log(data)
-
+            for(let key in data) {
+                alert(`${key}:${data[key]}`);
+            }
+            alert(onEdit)
             async function sendData() {
+                const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
                 try {
-                    let result;
-                    if(onEdit) {
-                        result = await axios.post('http://localhost:8085/reserve', { ...data });
-                    } else {
-                        result = await axios.post('http://localhost:8085/editReserve', { ...data });
-                    }
+                    const result = await axios.post(url, { ...data });
                     console.log(result.data);
                     return result.data;
                 } catch(e) {
