@@ -178,7 +178,6 @@ export default {
             }
 
             context.emit('onSubmit', data);
-            window.Telegram.WebApp.close();
         }
 
         return {

@@ -150,7 +150,6 @@ export default {
             }
 
             context.emit('onSubmit', data, true);
-            window.Telegram.WebApp.close();
         }
 
         onMounted(async() => {

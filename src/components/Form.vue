@@ -142,7 +142,7 @@ export default {
             }
 
             await sendData();
-            window.Telegram?.WebApp?.close();
+            // window.Telegram?.WebApp?.close();
         }
 
         onMounted(async () => {
