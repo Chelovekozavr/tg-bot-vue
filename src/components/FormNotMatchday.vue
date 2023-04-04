@@ -35,7 +35,6 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            {{ place }}
             <form-place-input
                 v-if="!isAdmin"
                 v-model="place"
@@ -136,7 +135,7 @@ export default {
                 name: name.value,
                 time: time.value,
                 guests: guests.value,
-                place: places.find(item => item.value === place.value).value,
+                place: place.value,
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: date.value.toISOString(),
             }
