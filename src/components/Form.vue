@@ -129,9 +129,10 @@ export default {
             for(let key in data) {
                 alert(`${key}:${data[key]}`);
             }
+            const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
+            console.log(url)
             alert(onEdit)
             async function sendData() {
-                const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
                 try {
                     const result = await axios.post(url, { ...data });
                     console.log(result.data);
