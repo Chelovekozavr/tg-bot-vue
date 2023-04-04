@@ -130,7 +130,7 @@ export default {
                 alert(`${key}:${data[key]}`);
             }
             const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
-            console.log(url)
+            alert(url)
             alert(onEdit)
             async function sendData() {
                 try {
