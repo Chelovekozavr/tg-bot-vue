@@ -126,12 +126,8 @@ export default {
 
 
         async function onSubmit(data, onEdit = false) {
-            for(let key in data) {
-                alert(`${key}:${data[key]}`);
-            }
             const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
-            alert(url)
-            alert(onEdit)
+
             async function sendData() {
                 try {
                     const result = await axios.post(url, { ...data });
@@ -143,7 +139,7 @@ export default {
             }
 
             await sendData();
-            // window.Telegram?.WebApp?.close();
+            window.Telegram?.WebApp?.close();
         }
 
         onMounted(async () => {
