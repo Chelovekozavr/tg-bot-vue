@@ -1,7 +1,8 @@
 import axios from "axios";
 
-async function getTeamLogo(matchUrl = "https://flashscore.ua/match/G67uHGC6") {
+async function getTeamLogo(matchUrl) {
     const [, matchID] = matchUrl.split("match/");
+    const url = 'https://flashscore.ua/' + matchUrl;
 
     let matchInfo = {}
     await axios.get(matchUrl).then(res => {
