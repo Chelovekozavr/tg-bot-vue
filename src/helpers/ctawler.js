@@ -5,7 +5,7 @@ async function getTeamLogo(matchUrl) {
     const url = 'https://flashscore.ua/' + matchUrl;
 
     let matchInfo = {}
-    await axios.get(matchUrl).then(res => {
+    await axios.get(url).then(res => {
         const regex = /window.environment = (.*?)<\/script>/
         const rawData = res.data.replace(/\n/g, '').match(regex)[0].replace("window.environment = ", "").replace(/<\/script>/, "")
         const parsedData = JSON.parse(rawData.substr(0, rawData.lastIndexOf(";")))
