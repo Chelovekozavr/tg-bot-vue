@@ -56,13 +56,10 @@ export default {
         let forFriend = ref(props.isAdmin);
         let phone = ref(props.phoneModelValue || '');
         let name = ref(props.nameModelValue || 'Kaligula');
-        console.log(props.nameModelValue, 555555)
 
         const options = reactive({
             mask: "(###)###-##-##",
         })
-
-        console.log(props.onEdit)
 
         if(!props.onEdit && window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
 

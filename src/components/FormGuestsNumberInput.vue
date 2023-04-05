@@ -50,7 +50,6 @@ export default {
         modelValue: Number,
     },
     setup(props, context) {
-        console.log(props.modelValue)
         let guests = ref(props.modelValue);
         function minusGuests() {
             if(guests.value <=1) {

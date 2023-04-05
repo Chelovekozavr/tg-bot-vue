@@ -97,7 +97,7 @@ export default {
         let phone = ref('');
         const form = ref(null);
         let isAdmin = ref(getUrlParam('isAdmin') || false);
-        let date = ref(new Date());
+        let date = ref(new Date(+getUrlParam('today')));
         let guests = ref(2);
         let place = ref('');
         let name = ref('Kaligula');
