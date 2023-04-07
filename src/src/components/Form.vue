@@ -4,7 +4,8 @@
             class="mx-auto"
             max-width="450"
         >
-            <router-view
+            <component
+                :is="currentComponent"
                 :home-team-logo="homeTeamLogo"
                 :away-team-logo="awayTeamLogo"
                 :name-rules="nameRules"
@@ -13,12 +14,17 @@
                 :agreement-rules="agreementRules"
                 :match-time-options="matchTimeOptions"
                 @on-submit="onSubmit"
-            ></router-view>
+            >
+
+            </component>
         </v-card>
     </v-main>
 </template>
 
 <script>
+import FormMatchday from "./FormMatchday";
+import FormNotMatchday from "./FormNotMatchday";
+import FormEdit from "./FormEdit";
 import {computed, onMounted, reactive, ref} from "vue";
 import { getUrlParam } from "../helpers/getUrlParams";
 import getTeamLogo from "../helpers/ctawler";
@@ -26,23 +32,18 @@ import axios from "axios";
 
 export default {
     name: 'App',
+    props: ['currentComponent'],
+    components: {
+        FormMatchday,
+        FormNotMatchday,
+        FormEdit,
+    },
     setup() {
-        // parsedDate: 2023-04-01T14:00:00.000Z,
-        //     matchName: undefined,
-        //     title: undefined,
-        //     time: '17:00',
-        //     date: '01.04.2023',
-        //     homeTeam: 'Львів',
-        //     awayTeam: 'Динамо К.',
-        //     topMatch: false,
-        //     url: 'https://www.flashscore.ua/match/Augn9Hpr/'
-        // ?parsedDate=2023-04-01T14:00:00.000Z&time=17:00&date=01.04.2023&homeTeam=Львів&awayTeam=Динамо К.&topMatch=false&url=https://www.flashscore.ua/match/Augn9Hpr/
-
         let isLoading = ref(true);
         let homeTeamLogo = ref('');
         let awayTeamLogo = ref('');
 
-        const nameRules = reactive([
+        const nameRules = reactive( [
             value => {
                 if (value?.length >= 3) {
                     return true;

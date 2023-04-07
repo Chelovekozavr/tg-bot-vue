@@ -1,44 +1,45 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import Form from '../components/Form';
 import FormMatchday from '../components/FormMatchday';
 import FormNotMatchday from '../components/FormNotMatchday';
 import FormEdit from '../components/FormEdit';
-import Form from '../components/Form';
+import GetReserve from '../components/GetReserve';
 
 const routes = [
     {
         path: '/',
         name: 'home',
         props: true,
-        components: {
-            default:  FormNotMatchday,
-            'wrapper': Form,
-        }
+        component: Form,
+        children: [
+            { 
+                path: '',
+                component: FormNotMatchday,
+                wrapper: Form
+            },
+            {
+                path: '/matchday',
+                component: FormMatchday,
+                wrapper: Form
+            },
+            {
+                path: '/notMatchday',
+                component: FormNotMatchday,
+                wrapper: Form
+            },
+            {
+                path: '/edit',
+                component: FormEdit,
+                wrapper: Form
+            },
+        ]
     },
     {
-        path: '/matchday',
-        name: 'FormMatchday',
+        path: '/getReserve',
+        name: GetReserve,
         props: true,
         components: {
-            default:  FormMatchday,
-            'wrapper': Form,
-        }
-    },
-    {
-        path: '/notMatchday',
-        name: 'NotMatchDay',
-        props: true,
-        components: {
-            default:  FormNotMatchday,
-            'wrapper': Form,
-        }
-    },
-    {
-        path: '/edit',
-        name: 'Edit',
-        props: true,
-        components: {
-            default:  FormEdit,
-            'wrapper': Form,
+            default:  GetReserve,
         }
     },
 ];

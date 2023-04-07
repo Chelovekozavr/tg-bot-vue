@@ -78,7 +78,7 @@ import FormGuestsNumberInput from "./FormGuestsNumberInput";
 import FormTimePickerInput from './FormTimePickerInput'
 
 export default {
-    name: "FormMatchday",
+    name: "FormNotMatchday",
     components: {
         FormPersonInput,
         FormGuestsNumberInput,

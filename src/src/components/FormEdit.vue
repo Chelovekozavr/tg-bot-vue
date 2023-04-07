@@ -154,7 +154,7 @@ export default {
 
         onMounted(async() => {
             loading.value = true;
-            const id = getUrlParam('id');
+            const id = getUrlParam('id') || '642c914e12db2eecf80b1f1e';
 
             try {
                 const result = await axios.post('http://localhost:8085/getReserve', { id });

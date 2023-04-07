@@ -1,0 +1,48 @@
+input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+    outline: none;
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+hr {
+    margin: 20px 0;
+}
+input[type="radio"] {
+    display: none;
+}
+body {
+    font-family: 'True Gothic Cyr', sans-serif;
+    margin: 0;
+    padding: 5vw 10vw;
+    background: #0E3151;
+}

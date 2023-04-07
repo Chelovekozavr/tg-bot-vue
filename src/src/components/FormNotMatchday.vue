@@ -3,7 +3,6 @@
         @submit.prevent="onSubmit"
         validate-on="submit"
         ref="form"
-        v-if="!loading"
     >
         <v-card-item>
             <h1>Бронювання на {{ date.toLocaleString('uk-UA', { weekday: 'short', month: 'long', day: 'numeric'}) }}</h1>
@@ -11,45 +10,41 @@
                 v-model:selected-date="date"
             >
             </form-date-input>
-
             <v-divider class="my-4"></v-divider>
+
             <form-time-picker-input
                 :today-selected="todaySelected"
                 :key="date"
-                :modelValue="time"
                 v-model:selected-time="time"
                 @plus-day="plusDay"
             >
             </form-time-picker-input>
 
             <form-person-input
-                :phone-model-value="phone"
-                :name-model-value="name"
+                :modelValue:phone="phone"
+                :modelValue:name="name"
                 :name-rules="nameRules"
+                :phone-rules="phoneRules"
                 :is-admin="isAdmin"
-                :on-edit="true"
-                @update:phoneModelValue="phone = $event"
-                @update:nameModelValue="name = $event"
+                @update:modelValue:phone="phone = $event"
+                @update:modelValue:name="name = $event"
             >
             </form-person-input>
-
             <form-guests-number-input
                 v-model="guests"
-                :mode-value="guests"
+                :modelValue="guests"
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            {{ typeof place }}
-            {{  place }}
             <form-place-input
+                v-if="!isAdmin"
                 v-model="place"
-                :disabled="isAdmin"
                 :modelValue="place"
             >
             </form-place-input>
 
             <div
-                v-if="isAdmin"
+                v-else
                 class="d-flex flex-row flex-gap justify-space-between align-start mb-4"
             >
                 <v-label class="w-33">Коментар</v-label>
@@ -73,10 +68,9 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
 import { getUrlParam } from '../helpers/getUrlParams';
-import axios from "axios";
 import FormPersonInput from "./FormPersonInput";
 import FormPlaceInput from "./FormPlaceInput";
 import FormDateInput from "./FormDateInput"
@@ -84,7 +78,7 @@ import FormGuestsNumberInput from "./FormGuestsNumberInput";
 import FormTimePickerInput from './FormTimePickerInput'
 
 export default {
-    name: "FormMatchday",
+    name: "FormNotMatchday",
     components: {
         FormPersonInput,
         FormGuestsNumberInput,
@@ -95,30 +89,30 @@ export default {
     props: {
         guestsRules: Array,
         nameRules: Array,
+        phoneRules: Array,
     },
     emits: ['onSubmit'],
-
     setup(props, context) {
         //form
-
-        let loading = ref(true);
         let phone = ref('');
         const form = ref(null);
         let isAdmin = ref(getUrlParam('isAdmin') || false);
-        let date = ref(new Date());
+        let date = ref(new Date(+getUrlParam('today')));
         let guests = ref(2);
-        let place = ref(1);
-        let name = ref('');
+        let place = ref('');
+        let name = ref('Kaligula');
         let adminComment = ref('');
 
-        const hoursNow = ref(new Date().getHours());
+        // const hoursNow = ref(new Date().getHours());
         let todaySelected = computed(() => {
-            console.log(
-                date.value
-            )
             return date.value.getDate() === new Date().getDate();
         });
-        let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
+        // let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
+        let time = ref('19:00');
+
+        if(window.Telegram?.WebApp?.initDataUnsafe) {
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula';
+        }
 
         // submit
 
@@ -144,36 +138,15 @@ export default {
                 time: time.value,
                 guests: guests.value,
                 place: place.value,
-                query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: date.value.toISOString(),
-                adminComment: adminComment.value,
+                eventType: getUrlParam('eventType'),
+                eventTitle: getUrlParam('eventTitle'),
             }
 
-            context.emit('onSubmit', data, true);
+            context.emit('onSubmit', data);
         }
 
-        onMounted(async() => {
-            loading.value = true;
-            const id = getUrlParam('id');
-
-            try {
-                const result = await axios.post('http://localhost:8085/getReserve', { id });
-
-                console.log(result.data);
-                date.value = new Date(result.data.date);
-                time.value = result.data.time;
-                guests.value = result.data.guests;
-                name.value = result.data.name;
-                place.value = result.data.place;
-            } catch(e) {
-                console.log(e)
-            }
-
-            loading.value = false;
-        });
-
         return {
-            loading,
             form,
             date,
             time,
