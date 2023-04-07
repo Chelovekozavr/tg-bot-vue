@@ -4,13 +4,13 @@
         class="ticket d-flex align-center"
     >
         <div>
-            <div class="ticket__header mb-4 pa-4 flex-gap justify-space-between align-center PUPPETEER">
+            <div class="ticket__header mb-4 pa-4 flex-gap justify-space-between align-center">
                 <img
                     :src="homeTeamLogo"
                     alt=""
                     class="ticket__logo"
                 >
-                <div class="px-2">
+                <div class="px-2 PUPPETEER">
                     <h2>{{ matchDate }}</h2>
                     <div class="match-name">
                         <h1>{{ reserve.eventTitle }}</h1>
