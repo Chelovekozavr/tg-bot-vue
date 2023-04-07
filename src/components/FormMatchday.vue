@@ -7,6 +7,8 @@
         <FormHeader
             :home-team-logo="homeTeamLogo"
             :away-team-logo="awayTeamLogo"
+            :home-team="homeTeam"
+            :away-team="awayTeam"
         >
         </FormHeader>
 
@@ -105,7 +107,9 @@ export default {
         phoneRules: Array,
         agreementRules: Array,
         homeTeamLogo: String,
+        homeTeam: String,
         awayTeamLogo: String,
+        awayTeam: String,
         matchTimeOptions: Array,
     },
     emits: ['onSubmit'],
@@ -177,6 +181,7 @@ export default {
                 adminComment: adminComment.value,
                 eventType: getUrlParam('eventType'),
                 eventTitle: getUrlParam('eventTitle'),
+                url: getUrlParam('url'),
             }
 
             context.emit('onSubmit', data);

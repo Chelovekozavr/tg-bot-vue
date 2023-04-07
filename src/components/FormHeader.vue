@@ -22,19 +22,18 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { getUrlParam } from "../helpers/getUrlParams";
 
 export default {
     name: 'FormHeader',
     props: {
         homeTeamLogo: String,
+        homeTeam: String,
         awayTeamLogo: String,
+        awayTeam: String,
     },
     setup() {
-        const homeTeam = ref(getUrlParam('homeTeam'));
-        const awayTeam = ref(getUrlParam('awayTeam'));
-
         const matchDate = computed(() => {
             const dateString = getUrlParam('parsedDate') || null;
             const dateObj = new Date(dateString);
@@ -55,8 +54,6 @@ export default {
 
         return {
             matchDate,
-            homeTeam,
-            awayTeam,
         }
     }
 }

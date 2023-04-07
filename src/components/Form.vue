@@ -6,7 +6,9 @@
         >
             <router-view
                 :home-team-logo="homeTeamLogo"
+                :home-team="homeTeam"
                 :away-team-logo="awayTeamLogo"
+                :away-team="awayTeam"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
                 :guests-rules="guestsRules"
@@ -27,20 +29,11 @@ import axios from "axios";
 export default {
     name: 'App',
     setup() {
-        // parsedDate: 2023-04-01T14:00:00.000Z,
-        //     matchName: undefined,
-        //     title: undefined,
-        //     time: '17:00',
-        //     date: '01.04.2023',
-        //     homeTeam: 'Львів',
-        //     awayTeam: 'Динамо К.',
-        //     topMatch: false,
-        //     url: 'https://www.flashscore.ua/match/Augn9Hpr/'
-        // ?parsedDate=2023-04-01T14:00:00.000Z&time=17:00&date=01.04.2023&homeTeam=Львів&awayTeam=Динамо К.&topMatch=false&url=https://www.flashscore.ua/match/Augn9Hpr/
-
         let isLoading = ref(true);
         let homeTeamLogo = ref('');
+        let homeTeam = ref(getUrlParam('homeTeam'));
         let awayTeamLogo = ref('');
+        let awayTeam = ref(getUrlParam('awayTeam'));
 
         const nameRules = reactive([
             value => {
@@ -157,6 +150,8 @@ export default {
         return {
             isLoading,
             homeTeamLogo,
+            homeTeam,
+            awayTeam,
             awayTeamLogo,
             nameRules,
             phoneRules,
