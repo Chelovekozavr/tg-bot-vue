@@ -2,7 +2,7 @@
     <h1>text pest</h1>
     <v-card
         v-if="!isLoading"
-        class="ticket d-flex align-center"
+        class="ticket d-flex align-center PUPPETEER"
     >
         <div>
             <div class="ticket__header mb-4 pa-4 flex-gap justify-space-between align-center">
