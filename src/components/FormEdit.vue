@@ -39,8 +39,7 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            {{ typeof place }}
-            {{  place }}
+
             <form-place-input
                 v-model="place"
                 :disabled="isAdmin"
