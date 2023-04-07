@@ -1,4 +1,5 @@
 <template>
+    <h1>text pest</h1>
     <v-card
         v-if="!isLoading"
         class="ticket d-flex align-center"
