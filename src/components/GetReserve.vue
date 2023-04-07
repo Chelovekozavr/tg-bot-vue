@@ -1,11 +1,10 @@
 <template>
-    <h1>text pest</h1>
     <v-card
         v-if="!isLoading"
-        class="ticket d-flex align-center PUPPETEER"
+        class="ticket d-flex align-center"
     >
         <div>
-            <div class="ticket__header mb-4 pa-4 flex-gap justify-space-between align-center">
+            <div class="ticket__header mb-4 pa-4 flex-gap justify-space-between align-center PUPPETEER">
                 <img
                     :src="homeTeamLogo"
                     alt=""
@@ -66,7 +65,7 @@
                         </v-label>
 
                         <h3 class="ticket__place">
-                            авіфлталвріф арлоівфра лрвілоалвіпавіфпа овіпаопівпар пцуофпаіваівавіф
+                            {{ reserve.place }}
                         </h3>
                     </div>
                 </div>
@@ -105,18 +104,14 @@ export default {
             try {
                 const result = await axios.post('http://localhost:8085/getReserve', { id });
                 reserve.value = result.data;
-                console.log(result.url)
             } catch(e) {
                 console.log(e);
             }
 
             if(reserve.value.url) {
-                console.log(reserve.value.url)
                 const flashScoreData = await getTeamLogo(reserve.value.url);
-                console.log(flashScoreData)
                 homeTeamLogo.value = `https://www.flashscore.ua${flashScoreData.home[0].image_path}`;
                 awayTeamLogo.value = `https://www.flashscore.ua${flashScoreData.away[0].image_path}`;
-                console.log(homeTeamLogo, awayTeamLogo)
             }
 
             const dateString = reserve.value.date;

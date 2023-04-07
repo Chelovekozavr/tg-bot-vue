@@ -184,6 +184,7 @@ export default {
                 url: getUrlParam('url'),
             }
 
+            window.Telegram?.WebApp?.close();
             context.emit('onSubmit', data);
         }
 

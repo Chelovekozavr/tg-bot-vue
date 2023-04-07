@@ -143,6 +143,7 @@ export default {
                 eventTitle: getUrlParam('eventTitle'),
             }
 
+            window.Telegram?.WebApp?.close();
             context.emit('onSubmit', data);
         }
 
