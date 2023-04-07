@@ -109,7 +109,8 @@ export default {
         let place = ref(1);
         let name = ref('');
         let adminComment = ref('');
-
+        let eventType = ref('');
+        let eventTitle = ref('');
         const hoursNow = ref(new Date().getHours());
         let todaySelected = computed(() => {
             console.log(
@@ -145,8 +146,9 @@ export default {
                 place: place.value,
                 date: date.value.toISOString(),
                 adminComment: adminComment.value,
-                eventType: getUrlParam('eventType'),
-                eventTitle: getUrlParam('eventTitle'),
+                eventType: eventType.value,
+                eventTitle: eventTitle.value,
+
             }
 
             window.Telegram?.WebApp?.close();
@@ -161,12 +163,13 @@ export default {
             try {
                 const result = await axios.post('http://localhost:8085/getReserve', { id });
 
-                console.log(result.data);
                 date.value = new Date(result.data.date);
                 time.value = result.data.time;
                 guests.value = result.data.guests;
                 name.value = result.data.name;
                 place.value = result.data.place;
+                eventType.value = result.data.eventType;
+                eventTitle.value = result.data.eventTitle;
             } catch(e) {
                 console.log(e)
             }
