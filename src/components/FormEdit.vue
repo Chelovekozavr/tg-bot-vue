@@ -144,9 +144,10 @@ export default {
                 time: time.value,
                 guests: guests.value,
                 place: place.value,
-                query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: date.value.toISOString(),
                 adminComment: adminComment.value,
+                eventType: getUrlParam('eventType'),
+                eventTitle: getUrlParam('eventTitle'),
             }
 
             context.emit('onSubmit', data, true);

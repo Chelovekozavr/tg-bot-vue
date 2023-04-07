@@ -175,6 +175,8 @@ export default {
                 query_id: window?.Telegram?.WebApp?.initDataUnsafe?.query_id || 1123,
                 date: isoDateTime,
                 adminComment: adminComment.value,
+                eventType: getUrlParam('eventType'),
+                eventTitle: getUrlParam('eventTitle'),
             }
 
             context.emit('onSubmit', data);
