@@ -190,10 +190,7 @@ export default {
         }
 
         function alertxx() {
-            let arr = window.Telegram?.WebApp?.initDataUnsafe;
-            for (let key in arr) {
-                alert(arr[key])
-            }
+            alert('text')
         }
 
         return {
