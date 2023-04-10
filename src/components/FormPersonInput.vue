@@ -1,17 +1,18 @@
 <template>
     <div class="d-flex flex-row flex-gap justify-space-between align-start mb-6">
         <v-label>
-            Стіл бронюю
+            Стіл бронюю {{
+                forFriend
+            }}
         </v-label>
         <div v-if="!forFriend">
             <v-btn
                 class="ma-2"
-                :color="'p' +
-                 'rimary'"
+                :color="'primary'"
             >
                 Для себе ({{ `@${name}` }})
             </v-btn>
-            <v-btn @click="forFriend = true; name = ''">Для друга</v-btn>
+            <v-btn @click="forFriend = true;">Для друга</v-btn>
         </div>
         <div v-else class="d-flex w-75">
             <v-text-field
