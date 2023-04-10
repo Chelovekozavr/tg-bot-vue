@@ -1,7 +1,7 @@
 <template>
     <h1>test</h1>
     {{ name }}
-    <v-btn @click="alertxx()">
+    <v-btn @click="alert">
         alert
     </v-btn>
 </template>
@@ -13,15 +13,13 @@ export default {
     setup() {
         let name = ref(window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
 
-        function alertxx() {
-            alert('text')
-
-            return
+        function alert() {
+            alert('test')
         }
 
         return {
             name,
-            alertxx
+            alert
         }
     }
 }
