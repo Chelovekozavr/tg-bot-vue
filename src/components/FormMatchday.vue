@@ -22,9 +22,12 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            {{userHasUsername}}
-            {{isAdmin}}
-            {{isAdmin || !userHasUsername}}
+            <h1>
+                {{userHasUsername}}
+                {{isAdmin}}
+                {{isAdmin || !userHasUsername}}
+
+            </h1>
             <form-person-input
                 :phone-model-value:="phone"
                 :name-model-value:name="name"

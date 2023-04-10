@@ -19,10 +19,12 @@
                 @plus-day="plusDay"
             >
             </form-time-picker-input>
-            {{ userHasUsername }}
-            {{userHasUsername}}
-            {{isAdmin}}
-            {{isAdmin || !userHasUsername}}
+            <h1>
+                {{userHasUsername}}
+                {{isAdmin}}
+                {{isAdmin || !userHasUsername}}
+
+            </h1>
 
             <form-person-input
                 :modelValue:phone="phone"
