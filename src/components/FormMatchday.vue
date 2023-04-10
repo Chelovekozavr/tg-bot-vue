@@ -129,7 +129,8 @@ export default {
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
             if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
-                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+                userHasUsername.value = true;
             } else {
                 name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
                 userHasUsername.value = false;
