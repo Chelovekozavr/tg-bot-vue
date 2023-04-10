@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { places } from '../helpers/placeEnum';
 import { getUrlParam } from '../helpers/getUrlParams';
 import FormPersonInput from "./FormPersonInput";
