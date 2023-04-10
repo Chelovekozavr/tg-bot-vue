@@ -22,13 +22,13 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            {{!window?.Telegram?.WebApp?.initDataUnsafe?.user?.username}}
+            {{userHasUsername}}
             <form-person-input
                 :phone-model-value:="phone"
                 :name-model-value:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
-                :friend="isAdmin || !window?.Telegram?.WebApp?.initDataUnsafe?.user?.username"
+                :friend="isAdmin || !userHasUsername"
                 @update:phoneModelValue="phone = $event"
                 @update:nameModelValue="name = $event"
             >
@@ -121,15 +121,19 @@ export default {
         let guests = ref(2);
         let place = ref('');
         let name = ref('Kaligula');
+        let userHasUsername = ref(false);
         let phone = ref('');
         let forFriend = ref(false);
         let adminComment = ref('');
         let agreement = ref(false);
 
-        if(window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name.length) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
-                || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username
-                || 'Kaligula';
+        if(window.Telegram?.WebApp?.initDataUnsafe) {
+            if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+            } else {
+                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
+                userHasUsername.value = false;
+            }
         }
 
         //onChange
@@ -193,6 +197,7 @@ export default {
             form,
             time,
             name,
+            userHasUsername,
             phone,
             guests,
             place,

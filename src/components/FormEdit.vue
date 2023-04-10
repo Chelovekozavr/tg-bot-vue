@@ -27,7 +27,7 @@
                 :name-model-value="name"
                 :name-rules="nameRules"
                 :is-admin="isAdmin"
-                :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
+                :friend="isAdmin || phone.length"
                 :on-edit="true"
                 @update:phoneModelValue="phone = $event"
                 @update:nameModelValue="name = $event"
@@ -109,6 +109,7 @@ export default {
         let guests = ref(2);
         let place = ref(1);
         let name = ref('');
+        let userHasUsername = ref(false);
         let adminComment = ref('');
         let eventType = ref('');
         let eventTitle = ref('');
@@ -184,6 +185,7 @@ export default {
             date,
             time,
             name,
+            userHasUsername,
             guests,
             place,
             phone,

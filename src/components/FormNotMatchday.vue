@@ -19,14 +19,14 @@
                 @plus-day="plusDay"
             >
             </form-time-picker-input>
-            {{!window?.Telegram?.WebApp?.initDataUnsafe?.user?.username}}
+            {{ userHasUsername }}
 
             <form-person-input
                 :modelValue:phone="phone"
                 :modelValue:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
-                :friend="isAdmin || !window?.Telegram?.WebApp?.initDataUnsafe?.user?.username"
+                :friend="isAdmin || !userHasUsername"
                 @update:modelValue:phone="phone = $event"
                 @update:modelValue:name="name = $event"
             >
@@ -102,6 +102,7 @@ export default {
         let guests = ref(2);
         let place = ref('');
         let name = ref('Kaligula');
+        let userHasUsername = ref(false);
         let adminComment = ref('');
 
         // const hoursNow = ref(new Date().getHours());
@@ -112,9 +113,12 @@ export default {
         let time = ref('19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
-                || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username
-                || 'Kaligula';
+            if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+            } else {
+                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
+                userHasUsername.value = false;
+            }
         }
 
         // submit
@@ -155,6 +159,7 @@ export default {
             date,
             time,
             name,
+            userHasUsername,
             guests,
             place,
             phone,
