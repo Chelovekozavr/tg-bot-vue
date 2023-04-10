@@ -11,7 +11,7 @@ import { ref } from 'vue';
 export default {
     name: "Test",
     setup() {
-        let name = ref(window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
+        let name = ref(window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name || 'Kaligula');
 
         function alertxx() {
             let arr = window.Telegram?.WebApp?.initDataUnsafe?.user;

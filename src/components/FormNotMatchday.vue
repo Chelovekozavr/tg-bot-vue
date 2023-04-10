@@ -113,7 +113,7 @@ export default {
         let time = ref('19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula';
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name || 'Kaligula';
         }
 
         // submit

@@ -128,8 +128,8 @@ export default {
         let adminComment = ref('');
         let agreement = ref(false);
 
-        if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+        if(window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name.length) {
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
         }
 
         //onChange
