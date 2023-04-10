@@ -1,10 +1,10 @@
 <template>
     <div class="d-flex flex-row flex-gap justify-space-between align-start mb-6">
         <v-label>
-            Стіл бронюю {{
-                forFriend
-            }}
+            Стіл бронюю
+
         </v-label>
+        <h2>{{ forFriend}}</h2>
         <div v-if="!forFriend">
             <v-btn
                 class="ma-2"
