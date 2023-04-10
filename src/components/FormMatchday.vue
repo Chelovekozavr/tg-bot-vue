@@ -25,7 +25,7 @@
 
             <form-person-input
                 :phone-model-value:="phone"
-                :name-model-value:name="name"
+                :name-model-value="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
                 :friend="isAdmin || !userHasUsername"
@@ -127,12 +127,14 @@ export default {
         let adminComment = ref('');
         let agreement = ref(false);
 
-        if(window.Telegram?.WebApp?.initDataUnsafe) {
+        if(window.Telegram?.WebApp?.initDataUnsafe?.user) {
             if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
-                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+                console.log('if1')
+                name.value = window?.Telegram?.WebApp?.initDataUnsafe?.user?.username;
                 userHasUsername.value = true;
             } else {
-                name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
+                console.log('if2')
+                name.value = window?.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
                 userHasUsername.value = false;
             }
         }

@@ -21,8 +21,8 @@
             </form-time-picker-input>
 
             <form-person-input
-                :modelValue:phone="phone"
-                :modelValue:name="name"
+                :phone-model-value:="phone"
+                :name-model-value="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
                 :friend="isAdmin || !userHasUsername"

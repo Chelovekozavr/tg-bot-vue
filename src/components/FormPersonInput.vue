@@ -53,6 +53,7 @@ export default {
         }
     },
     setup(props, context) {
+        console.log(props.nameModelValue)
         let forFriend = ref(props.friend || false);
         let phone = ref(props.phoneModelValue || '');
         let name = ref(props.nameModelValue);
