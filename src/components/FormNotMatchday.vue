@@ -30,6 +30,7 @@
                 @update:modelValue:name="name = $event"
             >
             </form-person-input>
+            {{ guests }}
             <form-guests-number-input
                 v-model="guests"
                 :modelValue="guests"
@@ -68,7 +69,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { places } from '../helpers/placeEnum';
 import { getUrlParam } from '../helpers/getUrlParams';
 import FormPersonInput from "./FormPersonInput";
@@ -146,6 +147,13 @@ export default {
             window.Telegram?.WebApp?.close();
             context.emit('onSubmit', data);
         }
+
+        onMounted(() => {
+            let arr = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+            for (let key in window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+                alert(arr[key])
+            }
+        })
 
         return {
             form,
