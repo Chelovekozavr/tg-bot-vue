@@ -14,10 +14,10 @@ export default {
         let name = ref(window.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'Kaligula');
 
         function alertxx() {
-            let arr = window.Telegram?.WebApp?.initDataUnsafe;
+            let arr = window.Telegram?.WebApp?.initDataUnsafe?.user;
 
             for(let key in arr) {
-                alert(arr[key])
+                alert(`${key}: ${arr[key]}`)
             }
             alert('text')
 
