@@ -4,6 +4,7 @@
             class="mx-auto"
             max-width="450"
         >
+            {{ name.value = window.Telegram?.WebApp?.initDataUnsafe }}
             <router-view
                 :home-team-logo="homeTeamLogo"
                 :home-team="homeTeam"
