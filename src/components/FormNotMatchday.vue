@@ -20,6 +20,9 @@
             >
             </form-time-picker-input>
             {{ userHasUsername }}
+            {{userHasUsername}}
+            {{isAdmin}}
+            {{isAdmin || !userHasUsername}}
 
             <form-person-input
                 :modelValue:phone="phone"
@@ -115,6 +118,7 @@ export default {
         if(window.Telegram?.WebApp?.initDataUnsafe) {
             if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
                 name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                userHasUsername.value = true;
             } else {
                 name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
                 userHasUsername.value = false;

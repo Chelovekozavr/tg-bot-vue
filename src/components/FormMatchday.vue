@@ -23,6 +23,8 @@
             >
             </form-guests-number-input>
             {{userHasUsername}}
+            {{isAdmin}}
+            {{isAdmin || !userHasUsername}}
             <form-person-input
                 :phone-model-value:="phone"
                 :name-model-value:name="name"
