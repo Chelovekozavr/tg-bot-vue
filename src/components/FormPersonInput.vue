@@ -62,12 +62,12 @@ export default {
         const options = reactive({
             mask: "(###)###-##-##",
         })
-
-        if(!props.onEdit && window.Telegram?.WebApp?.initDataUnsafe?.user?.username.length) {
-
-            console.log('onIf')
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
-        }
+        //
+        // if(!props.onEdit && window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+        //
+        //     console.log('onIf')
+        //     name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
+        // }
 
         function updateName() {
             context.emit('update:nameModelValue', name.value);
