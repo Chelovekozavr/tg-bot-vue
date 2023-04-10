@@ -22,12 +22,7 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-            <h1>
-                {{userHasUsername}}
-                {{isAdmin}}
-                {{isAdmin || !userHasUsername}}
 
-            </h1>
             <form-person-input
                 :phone-model-value:="phone"
                 :name-model-value:name="name"
@@ -142,30 +137,6 @@ export default {
             }
         }
 
-        //onChange
-        function minusGuests() {
-            for (let key in window.Telegram?.WebApp?.initDataUnsafe?.user) {
-                alert(`${key}: ${window.Telegram?.WebApp?.initDataUnsafe?.user[key]}`)
-            }
-            if(guests.value <=1) {
-                return;
-            }
-            guests.value--;
-        }
-        function plusGuests() {
-            if(guests.value >= 21) {
-
-                return;
-            }
-            guests.value++;
-        }
-        function updateGuests(e) {
-            guests.value = e.target.value;
-        }
-        function updateTime(e) {
-            time.value = e;
-        }
-
         //submit
         async function onSubmit() {
             console.log('onSubmit')
@@ -215,10 +186,6 @@ export default {
             topMatch,
             forFriend,
             isAdmin,
-            updateTime,
-            updateGuests,
-            minusGuests,
-            plusGuests,
             onSubmit
         }
     }

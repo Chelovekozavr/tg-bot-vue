@@ -1,11 +1,9 @@
 <template>
     <div class="d-flex flex-row flex-gap justify-space-between align-start mb-6">
-        <h2>{{ forFriend}}</h2>
+        <v-label>
+            Стіл бронюю
+        </v-label>
 
-<!--        <v-label>-->
-<!--            Стіл бронюю-->
-<!---->
-<!--        </v-label>-->
         <div v-if="!forFriend">
             <v-btn
                 class="ma-2"
@@ -62,12 +60,6 @@ export default {
         const options = reactive({
             mask: "(###)###-##-##",
         })
-        //
-        // if(!props.onEdit && window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
-        //
-        //     console.log('onIf')
-        //     name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
-        // }
 
         function updateName() {
             context.emit('update:nameModelValue', name.value);
