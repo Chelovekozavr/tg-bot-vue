@@ -151,8 +151,8 @@ export default {
 
         function alertxx() {
             alert('text')
-            let arr = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
-            for (let key in window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
+            let arr = window.Telegram?.WebApp?.initDataUnsafe?.user?;
+            for (let key in arr) {
                 alert(arr[key])
             }
         }
