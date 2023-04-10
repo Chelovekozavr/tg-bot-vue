@@ -25,12 +25,12 @@
                 :modelValue:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
+                :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
                 :is-admin="isAdmin"
                 @update:modelValue:phone="phone = $event"
                 @update:modelValue:name="name = $event"
             >
             </form-person-input>
-            {{ guests }}
             <form-guests-number-input
                 v-model="guests"
                 :modelValue="guests"
@@ -65,7 +65,6 @@
                 Забронювати
             </v-btn>
         </v-card-item>
-        <v-btn @click="alertxx">alert</v-btn>
     </v-form>
 </template>
 
@@ -113,7 +112,9 @@ export default {
         let time = ref('19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name || 'Kaligula';
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                || 'Kaligula';
         }
 
         // submit
@@ -149,17 +150,12 @@ export default {
             context.emit('onSubmit', data);
         }
 
-        function alertxx() {
-            alert('text')
-        }
-
         return {
             form,
             date,
             time,
             name,
             guests,
-            alertxx,
             place,
             phone,
             places,

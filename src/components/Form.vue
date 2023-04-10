@@ -118,7 +118,7 @@ export default {
         });
 
 
-        async function onSubmit(data, onEdit = false) {
+        async function onSubmit(data, onEdit = false, isAdmin = false) {
             const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
 
             async function sendData() {

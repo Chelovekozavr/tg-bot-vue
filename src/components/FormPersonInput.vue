@@ -44,7 +44,7 @@ export default {
     props: {
         phoneRules: Array,
         nameRules: Array,
-        isAdmin: Boolean,
+        friend: Boolean,
         phoneModelValue: String,
         nameModelValue: String,
         onEdit: {
@@ -53,7 +53,7 @@ export default {
         }
     },
     setup(props, context) {
-        let forFriend = ref(props.isAdmin);
+        let forFriend = ref(props.friend);
         let phone = ref(props.phoneModelValue || '');
         let name = ref(props.nameModelValue || 'Kaligula');
 

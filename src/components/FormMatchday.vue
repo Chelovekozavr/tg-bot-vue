@@ -16,7 +16,6 @@
             <div class="mb-4">
                 <h2 class="mb-4">Бронювання</h2>
             </div>
-            {{ guests }}
             <form-guests-number-input
                 v-model="guests"
                 :modelValue="guests"
@@ -29,6 +28,7 @@
                 :name-model-value:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
+                :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
                 :is-admin="isAdmin"
                 @update:phoneModelValue="phone = $event"
                 @update:nameModelValue="name = $event"
@@ -79,7 +79,6 @@
                 Забронювати
             </v-btn>
         </v-card-item>
-        <v-btn @click="alertxx">alert</v-btn>
     </v-form>
 </template>
 
@@ -129,7 +128,9 @@ export default {
         let agreement = ref(false);
 
         if(window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name.length) {
-            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
+            name.value = window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username
+                || 'Kaligula';
         }
 
         //onChange
@@ -189,12 +190,7 @@ export default {
             context.emit('onSubmit', data);
         }
 
-        function alertxx() {
-            alert('text')
-        }
-
         return {
-            alertxx,
             form,
             time,
             name,
