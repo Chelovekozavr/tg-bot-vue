@@ -4,8 +4,6 @@
             class="mx-auto"
             max-width="450"
         >
-            {{ window.Telegram?.WebApp?.initDataUnsafe }}
-            {{ window.Telegram?.WebApp?.initDataUnsafe?.user }}
             <router-view
                 :home-team-logo="homeTeamLogo"
                 :home-team="homeTeam"
