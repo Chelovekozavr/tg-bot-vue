@@ -22,13 +22,13 @@
                 :guests-rules="guestsRules"
             >
             </form-guests-number-input>
-
+            {{!window?.Telegram?.WebApp?.initDataUnsafe?.user?.username}}
             <form-person-input
                 :phone-model-value:="phone"
                 :name-model-value:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
-                :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
+                :friend="isAdmin || !window?.Telegram?.WebApp?.initDataUnsafe?.user?.username"
                 @update:phoneModelValue="phone = $event"
                 @update:nameModelValue="name = $event"
             >

@@ -19,13 +19,14 @@
                 @plus-day="plusDay"
             >
             </form-time-picker-input>
+            {{!window?.Telegram?.WebApp?.initDataUnsafe?.user?.username}}
 
             <form-person-input
                 :modelValue:phone="phone"
                 :modelValue:name="name"
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
-                :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
+                :friend="isAdmin || !window?.Telegram?.WebApp?.initDataUnsafe?.user?.username"
                 @update:modelValue:phone="phone = $event"
                 @update:modelValue:name="name = $event"
             >
