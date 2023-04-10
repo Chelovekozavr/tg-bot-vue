@@ -65,6 +65,7 @@
                 Забронювати
             </v-btn>
         </v-card-item>
+        <v-btn @click="alertxx">alert</v-btn>
     </v-form>
 </template>
 
@@ -148,12 +149,13 @@ export default {
             context.emit('onSubmit', data);
         }
 
-        onMounted(() => {
+        function alertxx() {
+            alert('text')
             let arr = window.Telegram?.WebApp?.initDataUnsafe?.user?.username;
             for (let key in window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
                 alert(arr[key])
             }
-        })
+        }
 
         return {
             form,
@@ -161,6 +163,7 @@ export default {
             time,
             name,
             guests,
+            alertxx,
             place,
             phone,
             places,
