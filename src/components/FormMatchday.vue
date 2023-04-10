@@ -145,7 +145,7 @@ export default {
         //onChange
         function minusGuests() {
             for (let key in window.Telegram?.WebApp?.initDataUnsafe?.user) {
-                alert(`${key}: ${window.Telegram?.WebApp?.initDataUnsafe?.user?[key]}`)
+                alert(`${key}: ${window.Telegram?.WebApp?.initDataUnsafe?.user[key]}`)
             }
             if(guests.value <=1) {
                 return;
