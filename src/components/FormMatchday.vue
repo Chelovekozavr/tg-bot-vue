@@ -29,7 +29,6 @@
                 :name-rules="nameRules"
                 :phone-rules="phoneRules"
                 :friend="isAdmin || !window.Telegram?.WebApp?.initDataUnsafe?.user?.username"
-                :is-admin="isAdmin"
                 @update:phoneModelValue="phone = $event"
                 @update:nameModelValue="name = $event"
             >
