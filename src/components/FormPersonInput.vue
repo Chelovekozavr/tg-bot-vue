@@ -55,7 +55,7 @@ export default {
         }
     },
     setup(props, context) {
-        let forFriend = ref(props.friend);
+        let forFriend = ref(props.friend || false);
         let phone = ref(props.phoneModelValue || '');
         let name = ref(props.nameModelValue || 'Kaligula');
 
