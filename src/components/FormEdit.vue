@@ -161,9 +161,11 @@ export default {
         onMounted(async() => {
             loading.value = true;
             const id = getUrlParam('id');
+            const isAdmin = getUrlParam('isAdmin')
+            const url = `http://localhost:8085/getReserveForEdit${isAdmin ? 'Admin' : ''}`;
 
             try {
-                const result = await axios.post('http://localhost:8085/getReserve', { id });
+                const result = await axios.post(url, { id });
 
                 date.value = new Date(result.data.date);
                 time.value = result.data.time;

@@ -119,7 +119,9 @@ export default {
 
 
         async function onSubmit(data, onEdit = false) {
-            const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
+            const isAdmin = getUrlParam('isAdmin');
+            const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}${isAdmin ? 'Admin' : ''}`;
+
             async function sendData() {
                 try {
                     const result = await axios.post(url, { ...data });
