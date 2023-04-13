@@ -142,8 +142,6 @@ export default {
             let valid = await form.value.validate();
 
             if(!valid.valid) {
-                console.log('invalid')
-
                 setTimeout(() => {
 
                     form.value.resetValidation();
