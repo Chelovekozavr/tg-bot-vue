@@ -65,7 +65,7 @@
                         </v-label>
 
                         <h3 class="ticket__place PUPPETEER">
-                            {{ reserve.place }}
+                            {{ reserve.place || '-' }}
                         </h3>
                     </div>
                 </div>
