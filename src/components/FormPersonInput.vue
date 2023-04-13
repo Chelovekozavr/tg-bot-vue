@@ -16,11 +16,10 @@
         <div v-else class="d-flex w-75">
             <v-text-field
                 label="Ім'я"
-                class="mr-2 font-s"
+                class="mr-2"
                 v-model="name"
                 :rules="nameRules"
                 @input="updateName"
-                density="compact"
             ></v-text-field>
             <v-text-field
                 v-maska:[options]
