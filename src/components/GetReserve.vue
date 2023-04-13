@@ -19,7 +19,7 @@
                 <img
                     :src="awayTeamLogo"
                     alt=""
-                    class="ticket__logo PUPPETEER"
+                    class="ticket__logo"
                 >
             </div>
 
@@ -60,7 +60,7 @@
                         </h3>
                     </div>
                     <div class="grid__col">
-                        <v-label>
+                        <v-label class="PUPPETEER">
                             Місце
                         </v-label>
 
