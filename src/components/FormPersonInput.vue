@@ -16,10 +16,11 @@
         <div v-else class="d-flex w-75">
             <v-text-field
                 label="Ім'я"
-                class="mr-2"
+                class="mr-2 font-s"
                 v-model="name"
                 :rules="nameRules"
                 @input="updateName"
+                density="compact"
             ></v-text-field>
             <v-text-field
                 v-maska:[options]
@@ -53,7 +54,6 @@ export default {
         }
     },
     setup(props, context) {
-        console.log(props.nameModelValue)
         let forFriend = ref(props.friend || false);
         let phone = ref(props.phoneModelValue || '');
         let name = ref(props.nameModelValue);

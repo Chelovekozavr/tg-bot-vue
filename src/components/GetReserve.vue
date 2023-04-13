@@ -10,7 +10,7 @@
                     alt=""
                     class="ticket__logo"
                 >
-                <div class="px-2 PUPPETEER">
+                <div class="px-2">
                     <h2>{{ matchDate }}</h2>
                     <div class="match-name">
                         <h1>{{ reserve.eventTitle }}</h1>
@@ -19,7 +19,7 @@
                 <img
                     :src="awayTeamLogo"
                     alt=""
-                    class="ticket__logo"
+                    class="ticket__logo PUPPETEER"
                 >
             </div>
 
@@ -73,7 +73,6 @@
         </div>
         <v-divider class="border-opacity-50 mr-8" vertical></v-divider>
         <qrcode-vue :value="qrLink" :size="100" level="M" foreground="#173b61"/>
-
     </v-card>
 </template>
 
@@ -83,7 +82,6 @@ import { onMounted, ref } from 'vue';
 import { getUrlParam } from '../helpers/getUrlParams';
 import getTeamLogo from "../helpers/ctawler";
 import QrcodeVue from 'qrcode.vue';
-
 
 export default {
     name: "getReserve.vue",
@@ -116,19 +114,13 @@ export default {
 
             const dateString = reserve.value.date;
             const dateObj = new Date(dateString);
-            // const splittedTime = reserve.value.time.split(':');
 
-            // dateObj.setHours(splittedTime[0]);
-            // dateObj.setMinutes(splittedTime[1]);
             matchDate.value = dateObj.toLocaleString(['uk-UA'], {
                 year: 'numeric',
                 month:"2-digit",
                 day:"2-digit",
-                // hour: '2-digit',
-                // minute:'2-digit',
             }).split(',').join('');
 
-            console.log(reserve.value);
             isLoading.value = false;
         });
 

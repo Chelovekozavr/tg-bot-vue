@@ -47,11 +47,6 @@ export default {
             }).split(',').join('');
         });
 
-        //     const urlParams = new URLSearchParams(window.location.search);
-        //     const homeTeam = computed(() => {
-        //         return urlParams.get('homeTeam');
-        //     });
-
         return {
             matchDate,
         }

@@ -104,11 +104,9 @@ export default {
         let userHasUsername = ref(false);
         let adminComment = ref('');
 
-        // const hoursNow = ref(new Date().getHours());
         let todaySelected = computed(() => {
             return date.value.getDate() === new Date().getDate();
         });
-        // let time = ref(todaySelected.value ? `${hoursNow.value + 1}:00` : '19:00');
         let time = ref('19:00');
 
         if(window.Telegram?.WebApp?.initDataUnsafe) {
@@ -121,8 +119,6 @@ export default {
             }
         }
 
-        // submit
-
         function plusDay() {
             let nextDay = new Date();
 
@@ -130,6 +126,9 @@ export default {
             date.value = nextDay;
 
         }
+
+        // submit
+
         async function onSubmit() {
             let valid = await form.value.validate();
 

@@ -129,11 +129,9 @@ export default {
 
         if(window.Telegram?.WebApp?.initDataUnsafe?.user) {
             if(window.Telegram?.WebApp?.initDataUnsafe?.user?.username) {
-                console.log('if1')
                 name.value = window?.Telegram?.WebApp?.initDataUnsafe?.user?.username;
                 userHasUsername.value = true;
             } else {
-                console.log('if2')
                 name.value = window?.Telegram?.WebApp?.initDataUnsafe?.user?.first_name;
                 userHasUsername.value = false;
             }
@@ -141,10 +139,8 @@ export default {
 
         //submit
         async function onSubmit() {
-            console.log('onSubmit')
             let valid = await form.value.validate();
 
-            console.log(!valid.valid)
             if(!valid.valid) {
                 console.log('invalid')
 
@@ -199,9 +195,7 @@ export default {
 /deep/ .centered-input input {
     text-align: center
 }
-.input-number {
-    -moz-appearance:textfield !important;
-}
+
 ::v-deep input::-webkit-outer-spin-button,
 ::v-deep input::-webkit-inner-spin-button {
     -webkit-appearance: none;

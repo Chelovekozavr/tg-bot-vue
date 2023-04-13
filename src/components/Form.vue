@@ -118,9 +118,8 @@ export default {
         });
 
 
-        async function onSubmit(data, onEdit = false, isAdmin = false) {
+        async function onSubmit(data, onEdit = false) {
             const url = `http://localhost:8085/${onEdit ? 'editReserve' : 'reserve'}`;
-            console.log(isAdmin)
             async function sendData() {
                 try {
                     const result = await axios.post(url, { ...data });
@@ -163,3 +162,5 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+</style>
