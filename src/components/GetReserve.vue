@@ -64,7 +64,7 @@
                             Місце
                         </v-label>
 
-                        <h3 class="ticket__place">
+                        <h3 class="ticket__place PUPPETEER">
                             {{ reserve.place }}
                         </h3>
                     </div>
